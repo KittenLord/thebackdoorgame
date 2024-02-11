@@ -5,16 +5,15 @@ using UnityEngine;
 
 public abstract class Application : MonoBehaviour
 {
-    public Computer Computer { get; private set; }
-    public Window Window { get; private set; }
-    public void SetContext(Computer computer, Window window)
+    public int ProcessId { get; set; }
+    public Computer.ComputerHandle Handle { get; set; }
+    public virtual void OnKilled() {}
+
+    public static Application Load(string name) => Load<Application>(name);
+    public static T Load<T>(string name) where T : Application
     {
-        Computer = computer;
-        Window = window;
+        string path = "Applications/" + name;
+        Debug.Log(path);
+        return Resources.Load<T>(path);
     }
-
-    public abstract WindowSettings GetSettings();
-
-    public virtual void OnClosed() { Window.Close(); }
-    public virtual void OnKilled() { Window.Close(); }
 }

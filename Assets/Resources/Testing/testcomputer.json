@@ -1,0 +1,10 @@
+{
+	"Ip":"127.0.0.1",
+	"Users": {
+		"admin": {
+			"Username":"admin",
+			"Password":"123"
+		}
+	},
+	"FileSystem": []
+}

@@ -7,12 +7,12 @@ using System.Linq;
 
 public class TestScript : MonoBehaviour
 {
-    public Window windowPrefab;
-    public Canvas canvas;
-
     void Start()
     {
-        var window = Instantiate(windowPrefab, canvas.transform);
-        window.LoadApplication("Terminal", new());
+        var computer = JsonConvert.DeserializeObject<Computer>(Resources.Load<TextAsset>("Testing/testcomputer").text);
+        var boot = Instantiate(Application.Load("Boot"), Game.Current.Canvas.transform);
+        var handle = new Computer.ComputerHandle(computer);
+        var result = handle.Authorize("admin", "123", 5, boot);
+        Debug.Log(result);
     }
 }

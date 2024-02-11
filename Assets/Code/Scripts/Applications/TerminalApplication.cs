@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class TerminalApplication : Application
+public class TerminalApplication : WindowApplication
 {
     [SerializeField] private TMP_Text ScrollText;
     [SerializeField] private Scrollbar Scrollbar;
@@ -13,14 +13,19 @@ public class TerminalApplication : Application
 
     void Start()
     {
-        Input.onSubmit.AddListener(OnEnter);
+        Input.onSubmit.AddListener(ExecuteCommand);
     }
 
-    private async void OnEnter(string line)
+    private async void ExecuteCommand(string line)
     {
         string command = Input.text;
-        ScrollText.text += "\n" + "<color=#AAAAAA>$user > </color>" + Input.text;
+        Debug.Log(Handle.GetProcess(ProcessId) is null);
+        var prefix = Handle.GetProcess(this.ProcessId).Access.AccessLevel + "$" + Handle.GetProcess(this.ProcessId).Access.Username;
+        ScrollText.text += "\n" + $"<color=#AAAAAA>{prefix} ~/users/admin/ > </color>" + Input.text;
         Input.text = "";
+
+        var args = CommandArgumentsParser.Parse(command);
+        Debug.Log(string.Join("\n", args));
 
         // Refocus on the input
         EventSystem.current.SetSelectedGameObject(Input.gameObject, null);

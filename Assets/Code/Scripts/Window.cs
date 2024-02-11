@@ -14,19 +14,20 @@ public class WindowSettings
 public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private WindowSettings Settings;
-    private Application Application;
+    private WindowApplication Application;
 
     [SerializeField] private RectTransform ThisWindow;
     [SerializeField] private RectTransform WorkingArea;
 
     private bool CanLoadApplication = true;
-    public void LoadApplication(string application, Computer computer)
+    public Application LoadApplication(string application)
     {
         CanLoadApplication = false;
-        var path = $"Applications/{application}";
-        var app = Resources.Load<Application>(path);
+        Debug.Log("abboa");
+        var app = WindowApplication.Load<WindowApplication>(application);
         this.Application = Instantiate(app, WorkingArea);
-        this.Application.SetContext(computer, this);
+        this.Application.Window = this;
+        return this.Application;
     }
 
     void Start()
