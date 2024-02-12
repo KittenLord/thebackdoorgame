@@ -6,5 +6,26 @@
 			"Password":"123"
 		}
 	},
-	"FileSystem": []
+	"FileSystem": [
+		{ 
+			"Path":"~",
+			"Permissions": {
+				"Permissions": {
+					"Inspect":["3"]
+				}
+			},
+			"IsDirectory":true,
+			"Contents":""
+		},
+		{ 
+			"Path":"~/test",
+			"Permissions": {
+				"Permissions": {
+					"Inspect":["1"]
+				}
+			},
+			"IsDirectory":true,
+			"Contents":""
+		},
+	]
 }

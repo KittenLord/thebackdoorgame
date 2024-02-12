@@ -29,5 +29,6 @@ public partial class Computer
         }
 
         public Process GetProcess(int pid) => computer.Processes.ContainsKey(pid) ? computer.Processes[pid] : null;
+        public FileNavigator GetNavigator(int pid) => new FileNavigator(computer, computer.Processes[pid].Access);
     }
 }
