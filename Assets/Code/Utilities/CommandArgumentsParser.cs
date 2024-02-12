@@ -22,6 +22,7 @@ public static class CommandArgumentsParser
             {
                 case State.Normal:
                     if(next == "\"" || next == "\'") { state = State.String; continue; }
+                    if(next == " " && buffer == "") continue;
                     if(next == " ") { result.Add(buffer); buffer = ""; continue; }
                     buffer += next;
                     break;

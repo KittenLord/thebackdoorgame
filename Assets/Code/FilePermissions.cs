@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 [JsonConverter(typeof(StringEnumConverter))]
 public enum FilePermission
 {
-    Read, Write, Delete, Manage, Inspect
+    Read, Write, Delete, Manage, Inspect, Create
 }
 
 public class FilePermissions
@@ -33,6 +33,7 @@ public class FilePermissions
     private bool FitSingle(ComputerAccess access, FilePermission permission) 
     {
         var list = this[permission];
+        if(list.Count <= 0) return true;
         if(list.Any(p => p == access.Username || (int.TryParse(p, out var i) && i <= access.AccessLevel))) return true;
         list.RemoveAll(l => !l.Contains(" "));
         return list.Select(l => l.Split(" ")).Any(l => int.Parse(l[0]) <= access.AccessLevel && l[1] == access.Username);

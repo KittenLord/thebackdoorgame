@@ -1,31 +1,67 @@
 {
-	"Ip":"127.0.0.1",
-	"Users": {
-		"admin": {
-			"Username":"admin",
-			"Password":"123"
-		}
-	},
-	"FileSystem": [
-		{ 
-			"Path":"~",
-			"Permissions": {
-				"Permissions": {
-					"Inspect":["3"]
-				}
-			},
-			"IsDirectory":true,
-			"Contents":""
-		},
-		{ 
-			"Path":"~/test",
-			"Permissions": {
-				"Permissions": {
-					"Inspect":["1"]
-				}
-			},
-			"IsDirectory":true,
-			"Contents":""
-		},
-	]
+  "Ip": "127.0.0.1",
+  "Users": {
+    "admin": {
+      "Username": "admin",
+      "Password": "123"
+    },
+	"root": {
+	  "Username": "root",
+	  "Password": "123"
+	}
+  },
+  "FileSystem": [
+    {
+      "Path": "~",
+      "Permissions": {
+        "Permissions": {
+          "Inspect": [
+            "1"
+          ]
+        }
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/admin",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/admin/desktop",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "Contents": ""
+    }
+  ]
 }

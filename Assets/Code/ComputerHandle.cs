@@ -19,16 +19,20 @@ public partial class Computer
             return result;
         }
 
-        public void ProcessWindow(Application parentProcess, int accessLevel, Window window, string application)
+        public Application ProcessWindow(Application parentProcess, int accessLevel, Window window, string application)
         {
             var app = window.LoadApplication(application);
             var result = computer.AddProcess(parentProcess.ProcessId, accessLevel, app);
             UnityEngine.Debug.Log(result);
             if(!result) { app.OnKilled(); window?.Close(); }
             app.Handle = this.Copy();
+            return app;
         }
+
+        public bool UserExists(string user) => computer.Users.ContainsKey(user);
 
         public Process GetProcess(int pid) => computer.Processes.ContainsKey(pid) ? computer.Processes[pid] : null;
         public FileNavigator GetNavigator(int pid) => new FileNavigator(computer, computer.Processes[pid].Access);
+        public string GetIp() => computer.Ip;
     }
 }
