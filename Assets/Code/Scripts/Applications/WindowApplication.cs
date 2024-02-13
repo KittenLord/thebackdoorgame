@@ -8,6 +8,6 @@ public abstract class WindowApplication : Application
     public Window Window { get; set; }
     public abstract WindowSettings GetSettings();
 
-    public override void OnKilled() { Window.Close(); }
-    public void OnClosed() { Window.Close(); }
+    public override void OnKilled() { Handle.KillProcess(ProcessId); Window.Close(); }
+    public void OnClosed() { OnKilled(); }
 }

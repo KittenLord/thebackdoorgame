@@ -57,28 +57,24 @@ public partial class Computer
             return new string(buffer.ToArray());
         }
 
-        public List<string> GetPathWalkthough(string path, bool ignoreLast)
+        public List<string> GetPathWalkthough(string path)
         {
             var split = path.Split("/");
             var result = split.Select(s => "").ToList();
 
             for(int i = 0; i < split.Length; i++)
             {
-                if(ignoreLast && i == split.Length - 1) break;
                 for(int j = 0; j <= i; j++)
                     result[i] += split[j] + (j != i ? "/" : "");
             }
 
-            if(ignoreLast && result.Count > 0) result.RemoveAt(result.Count - 1);
-            
             return result;
         }
 
-        public FileSystemError? GetFilePermissions(string path, bool ignoreLast, out FilePermissions permissions)
+        public FileSystemError? GetFilePermissions(string path, out FilePermissions permissions)
         {
             permissions = null;
-            if(path == "~") ignoreLast = false;
-            var walkthrough = GetPathWalkthough(path, ignoreLast);
+            var walkthrough = GetPathWalkthough(path);
             foreach(var w in walkthrough) Debug.Log(w);
             if(walkthrough.Any(w => !computer.FileSystem.Any(file => file.Path == w))) return FileSystemError.FatalError;
             var walkthroughFiles = walkthrough.Select(w => computer.FileSystem.Find(f => f.Path == w));
@@ -97,7 +93,7 @@ public partial class Computer
 
             if(!computer.FileSystem.Any(file => file.Path == path && file.IsDirectory)) return FileSystemError.DirectoryDoesntExist;
 
-            var result = GetFilePermissions(path, false, out var permissions);
+            var result = GetFilePermissions(path, out var permissions);
             if(result is not null) return result;
             if(!permissions.Fit(this.access, FilePermission.Inspect)) return FileSystemError.Forbidden;
 
@@ -118,6 +114,7 @@ public partial class Computer
             {
                 if(s == ".." && oldPathSplit.Count <= 0) return null;
                 else if(s == "..") oldPathSplit.RemoveAt(oldPathSplit.Count - 1);
+                else if(s == ".") continue;
                 else oldPathSplit.Add(s);
             }
 
@@ -130,7 +127,7 @@ public partial class Computer
             path = GetModifiedPath(this.Path, path);
             Debug.Log(path);
             if(path is null) return FileSystemError.InvalidPath;
-            var result = GetFilePermissions(path, false, out var permissions);
+            var result = GetFilePermissions(path, out var permissions);
             if(result is not null) return result;
             if(!permissions.Fit(this.access, FilePermission.Read)) return FileSystemError.Forbidden;
             var file = GetFile(path);
@@ -141,7 +138,7 @@ public partial class Computer
 
         public bool CanWriteToFile(string path)
         {
-            var result = GetFilePermissions(path, false, out var permissions);
+            var result = GetFilePermissions(path, out var permissions);
             Debug.Log(result.ToString() ?? "daiwudbauidbaw");
             if(result is not null) return false;
             return permissions.Fit(this.access, FilePermission.Write);
@@ -151,7 +148,7 @@ public partial class Computer
         {
             path = GetModifiedPath(this.Path, path);
             if(path is null) return FileSystemError.InvalidPath;
-            var result = GetFilePermissions(path, false, out var permissions);
+            var result = GetFilePermissions(path, out var permissions);
             if(result is not null) return result;
             if(!permissions.Fit(this.access, FilePermission.Write)) return FileSystemError.Forbidden;
             var file = GetFile(path);
@@ -167,7 +164,7 @@ public partial class Computer
             Debug.Log(path);
             if(!computer.FileSystem.Any(file => file.Path == newPath && file.IsDirectory)) return FileSystemError.DirectoryDoesntExist;
 
-            var result = GetFilePermissions(newPath, false, out var permissions);
+            var result = GetFilePermissions(newPath, out var permissions);
             if(result is not null) return result;
             if(!permissions.Fit(this.access, FilePermission.Inspect)) return FileSystemError.Forbidden;
 
@@ -179,6 +176,8 @@ public partial class Computer
         {
             return computer.FileSystem.Find(f => f.Path == path);
         }
+
+        public bool FileExists(string path) => GetFile(path) is not null;
 
         public FileSystemError? CreateFile(string path, bool isDirectory, out string filePath)
         {
@@ -195,7 +194,7 @@ public partial class Computer
             var result = this.Navigate(path);
             if(result is not null) return result;
 
-            var result2 = GetFilePermissions(this.Path, false, out var permissions);
+            var result2 = GetFilePermissions(this.Path, out var permissions);
             if(result2 is not null) return result2;
 
             if(!permissions.Fit(this.access, FilePermission.Create)) return FileSystemError.Forbidden;
@@ -213,7 +212,7 @@ public partial class Computer
             split.RemoveAt(split.Count - 1);
             var path = string.Join("/", split);
 
-            var result = GetFilePermissions(path, false, out var permissions);
+            var result = GetFilePermissions(path, out var permissions);
             if(result is not null) return result;
             if(!permissions.Fit(this.access, FilePermission.Inspect)) return FileSystemError.Forbidden;
 
@@ -221,11 +220,15 @@ public partial class Computer
             return null;
         }
 
-        public List<string> List()
+        public List<string> List(string prefix)
         {
-            var prefix = Path + "/";
+            prefix += "/";
             var files = computer.FileSystem
                 .Where(f => f.Path.StartsWith(prefix))
+                .Where(f => {
+                    var result = this.GetFilePermissions(f.Path, out var p);
+                    return result is null && p.Fit(this.access, FilePermission.Inspect);
+                })
                 .Where(f => IsValidFileName(f.Path.Replace(prefix, "")));
             return files.Select(f => f.Path).ToList();
         }
@@ -250,7 +253,7 @@ public partial class Computer
             path = GetModifiedPath(this.Path, path);
             if(path is null) return FileSystemError.InvalidPath;
 
-            var result = this.GetFilePermissions(path, false, out var p);
+            var result = this.GetFilePermissions(path, out var p);
             if(!p.Fit(this.access, FilePermission.Inspect)) return FileSystemError.Forbidden;
 
             var file = this.GetFile(path);
@@ -265,7 +268,7 @@ public partial class Computer
                     .Where(f => f.Path.StartsWith(focus.Value))
                     .Where(f => f.Path.Count(c => c == '/') - slashes == 1)
                     .Where(f => {
-                        var result = this.GetFilePermissions(f.Path, false, out var p);
+                        var result = this.GetFilePermissions(f.Path, out var p);
                         return result is null && p.Fit(this.access, FilePermission.Inspect);
                     });
 

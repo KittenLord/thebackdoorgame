@@ -19,6 +19,11 @@ public partial class Computer
             return result;
         }
 
+        public bool VerifyUser(string username, string password)
+        {
+            return computer.Users.ContainsKey(username) && computer.Users[username].Password == password;
+        }
+
         public Application ProcessWindow(Application parentProcess, int accessLevel, Window window, string application)
         {
             var app = window.LoadApplication(application);
@@ -28,6 +33,22 @@ public partial class Computer
             app.Handle = this.Copy();
             return app;
         }
+
+        public Application ProcessWindow(string username, string password, int accessLevel, Window window, string application)
+        {
+            var app = window.LoadApplication(application);
+            var result = computer.AddProcess(username, password, accessLevel, app);
+            if(!result) { app.OnKilled(); window?.Close(); }
+            app.Handle = this.Copy();
+            return app;
+        }
+
+        public void KillProcess(int pid)
+        {
+            computer.Processes.Remove(pid);
+        }
+
+        public Computer GetComputer() => computer;
 
         public bool UserExists(string user) => computer.Users.ContainsKey(user);
 

@@ -33,6 +33,7 @@ public static class CommandArgumentsParser
                     break;
                 case State.StringEscape:
                     if(next == "n") next = "\n";
+                    if(next == "\\") next = "\\";
                     // ... 
                     buffer += next;
                     state = State.String;

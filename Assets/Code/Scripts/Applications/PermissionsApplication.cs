@@ -29,21 +29,24 @@ public class PermissionsApplication : WindowApplication
         // This is some absolutely vile code, but it's a gamejam
 
         try{
+        ConfirmButton.onClick.AddListener(() => {
+            this.Window.OnCloseButton();
+        });
+        
         navigator = Handle.GetNavigator(ProcessId);
         var file = navigator.GetFile(TargetPath);
         TargetPathDisplay.text = TargetPath;
         if(file is null) { Debug.Log(TargetPath); return; }
 
-        var result = navigator.GetFilePermissions(TargetPath, file.IsDirectory, out var permissions);
+        var result = navigator.GetFilePermissions(TargetPath, out var permissions);
         if(result is not null) { Debug.Log(result); return; }
 
-        if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Manage)) { Debug.Log("dawdadasd"); return; }
+        if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Manage, FilePermission.ManageInner)) { Debug.Log("dawdadasd"); return; }
 
         var editPermissions = file.Permissions.GetOverridden(new());
 
         ConfirmButton.onClick.AddListener(() => {
             file.Permissions = editPermissions;
-            this.Window.OnCloseButton();
         });
 
         var categories = Enum.GetValues(typeof(FilePermission)).Cast<FilePermission>().ToList();
