@@ -6,8 +6,9 @@ using UnityEngine;
 public abstract class Application : MonoBehaviour
 {
     public int ProcessId { get; set; }
+    public abstract string Name { get; }
     public Computer.ComputerHandle Handle { get; set; }
-    public virtual void OnKilled() {}
+    public virtual void OnKilled() { Handle.KillProcess(ProcessId); Destroy(this.gameObject); }
 
     public static Application Load(string name) => Load<Application>(name);
     public static T Load<T>(string name) where T : Application

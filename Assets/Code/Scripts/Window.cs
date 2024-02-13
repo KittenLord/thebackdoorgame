@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class WindowSettings
 {
@@ -17,13 +18,13 @@ public class WindowSettings
     public Color? TitleTextColor { get; set; }
 }
 
-public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler
 {
     private WindowSettings Settings;
-    private WindowApplication Application;
+    public WindowApplication Application { get; private set; }
 
     [SerializeField] private RectTransform ThisWindow;
-    [SerializeField] private TMP_Text Title;
+    [SerializeField] public TMP_Text Title;
     [SerializeField] private RectTransform WorkingArea;
 
     private bool CanLoadApplication = true;
@@ -65,8 +66,31 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         Destroy(this.gameObject);
     }
 
+    public void Minimize()
+    {
+        this.transform.position -= new Vector3(0, 1, 0) * 20000;
+    }
+
+    public void Maximize()
+    {
+
+    }
+
     private bool Drag = false;
-    public void OnDrag(PointerEventData eventData) { if(Drag) ThisWindow.anchoredPosition += eventData.delta; }
-    public void OnBeginDrag(PointerEventData eventData) { Drag = !WorkingArea.GetWorldRect(Vector2.one).Contains(eventData.position); }
-    public void OnEndDrag(PointerEventData eventData) { Drag = false; }
+    public void OnDrag(PointerEventData eventData) 
+    { 
+        if(Drag) { ThisWindow.anchoredPosition += eventData.delta; }
+    }
+    public void OnBeginDrag(PointerEventData eventData) 
+    { 
+        Drag = !WorkingArea.GetWorldRect(Vector2.one).Contains(eventData.position); 
+    }
+    public void OnEndDrag(PointerEventData eventData) 
+    { 
+        Drag = false; 
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        transform.SetAsLastSibling(); 
+    }
 }

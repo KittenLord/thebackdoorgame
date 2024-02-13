@@ -11,13 +11,15 @@ using UnityEditor.Compilation;
 
 public class TerminalApplication : WindowApplication
 {
+    public override string Name => "terminal";
     [SerializeField] private TMP_Text ScrollText;
     [SerializeField] private Scrollbar Scrollbar;
     [SerializeField] private TMP_InputField Input;
 
     private Computer.FileNavigator navigator;
 
-    private bool Initialized = false;
+    private bool Hide = false;
+    public bool Initialized { get; private set; } = false;
     private bool StealInput = false;
     private System.Action<string> CustomInputHandler;
 
@@ -33,7 +35,7 @@ public class TerminalApplication : WindowApplication
     public int LastId { get; private set; }
     private void Respond() => LastId = Random.Range(int.MinValue, int.MaxValue);
 
-    private void ExecuteCommand(string line)
+    public void ExecuteCommand(string line)
     {
         if(StealInput) { CustomInputHandler?.Invoke(line); return; }
 
@@ -69,13 +71,15 @@ public class TerminalApplication : WindowApplication
         if(first == "kill") KillCommand(args);
         if(first == "tms") TmsCommand(args);
         if(first == "run") RunCommand(args);
+        if(first == "say") SayCommand(args);
+        if(first == "task") TaskCommand(args);
 
         Respond();
     }
 
     private async void LogRaw(string message)
     {
-        ScrollText.text += message;        
+        if(!Hide) ScrollText.text += message;        
 
         // Refocus on the input
         EventSystem.current.SetSelectedGameObject(Input.gameObject, null);
@@ -291,21 +295,24 @@ public class TerminalApplication : WindowApplication
         
         var result = navigator.GetFilePermissions(path, out var p);
         if(result is not null) { LogDefaultError(result.ToString()); return; }
-        if(!p.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Inspect, FilePermission.Read)) { LogDefaultError("Forbidden."); return; }
+        if(!p.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Inspect, FilePermission.Read, FilePermission.Run)) { LogDefaultError("Forbidden."); return; }
 
         string scriptAddendum = "";
         if(args.Count > 2) { scriptAddendum = string.Join("", args.TakeLast(args.Count - 2).Select(s => " " + s)); }
         scriptAddendum = scriptAddendum.Replace("\n", "").Replace("\r", ""); // prevent from injection
 
         var script = (navigator.GetFile(path).Contents + scriptAddendum).Split("\n").Select(s => s.Trim()).ToList();
+        var hide = script.Contains("#hide");
         if(script.FirstOrDefault() != "#EXECUTABLE_HEADER___") { LogError("Fatal error: executable's signature is invalid."); return; }
 
         var mode = args.Count >= 2 ? args[1] : "new";
 
         if(mode == "new")
         {
-            var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+            var window = Instantiate(Game.Current.WindowPrefab, this.transform);
             var terminal = Handle.ProcessWindow(this, this.Handle.GetProcess(ProcessId).Access.AccessLevel, window, "Terminal") as TerminalApplication;
+            terminal.Hide = hide;
+            window.transform.position = new Vector3(0, 1, 0) * 20000;
 
             while (!terminal.Initialized) await System.Threading.Tasks.Task.Delay(50);
 
@@ -323,6 +330,7 @@ public class TerminalApplication : WindowApplication
         }
         else if(mode == "this")
         {
+            this.Hide = hide;
             foreach (var line in script)
             {
                 if(line.StartsWith("#")) continue;
@@ -335,12 +343,83 @@ public class TerminalApplication : WindowApplication
                 Input.interactable = false;
             }
             Input.interactable = true;
+            this.Hide = false;
         }
         else
         {
             LogArgumentError(2, "[new|this]", mode);
             return;
         }
+
+        Log("Execution finished.");
+    }
+
+    private void SayCommand(List<string> args)
+    {
+        if(args.Count != 2) 
+        { 
+            LogError($"Unexpected argument count ({args.Count}, expected {2})."); 
+            Log("Hint: use double-quotes \" to provide a text string as an argument");
+            Log("Example: say #FFFFFF \"Lorem ipsum dolor sit amet\"");
+            return; 
+        }
+        System.Text.RegularExpressions.Regex colorRegex = new(@"\#([0-9]|[A-F]|[a-f]){6}");
+        if(!colorRegex.IsMatch(args[0])) { LogArgumentError(1, "color #RRGGBB", args[0]); return; }
+        Log(args[1], args[0].Replace("#", "").ToUpper());
+    }
+
+    private void TaskCommand(List<string> args)
+    {
+        if(args.Count == 0) { LogArgumentError(1, "(list|kill)", "<none>"); return; }
+        var mode = args[0];
+        args.RemoveAt(0);
+        if(mode == "list") TaskListCommand(args);
+        else if(mode == "kill") TaskKillCommand(args);
+        else LogArgumentError(1, "(list|kill)", mode);
+    }
+
+    private void TaskListCommand(List<string> args)
+    {
+        var processes = Handle.GetAllProcesses();
+
+        string PadMiddle(string source, int length)
+        {
+            int spaces = length - source.Length;
+            int padLeft = spaces / 2 + source.Length;
+            return source.PadLeft(padLeft).PadRight(length);
+        }
+
+        var maxPid = processes.Keys.Max(p => p.ToString().Length);
+        var maxName = processes.Values.Max(p => p.Application.Name.Length);
+        var maxPerms = processes.Values.Max(p => p.Access.ToString().Length);
+
+        int length = 0;
+        void PrintLine(string pid, string name, string perms)
+        {
+            var str = $"|{PadMiddle(pid, maxPid + 2)}|{PadMiddle(name, maxName + 2)}|{PadMiddle(perms, maxPerms + 2)}|";
+            length = str.Length;
+            Log(str);
+        }
+
+        PrintLine("PID", "Name", "Perms");
+        Log(new string('-', length));
+        foreach(var process in processes) PrintLine(process.Key.ToString(), process.Value.Application.Name, process.Value.Access.ToString());
+    }
+
+    private void TaskKillCommand(List<string> args)
+    {
+        if(args.Count != 1) { LogError("Expected 1 argument: PID"); return; }
+        if(!int.TryParse(args[0], out var pid)) { LogArgumentError(2, "integer (pid)", args[0]); return; }
+
+        var process = Handle.GetProcess(pid);
+        if(process is null) { LogError("Invalid PID: " + pid); return; }
+        var thisProcess = Handle.GetProcess(ProcessId);
+
+        if(thisProcess.Access.AccessLevel < process.Access.AccessLevel && thisProcess.Access.Username != "root")
+        { LogError("You do not have enough permissions to do this."); return; }
+
+        //Handle.KillProcess(process.Id);
+        process.Application.OnKilled();
     }
 
     

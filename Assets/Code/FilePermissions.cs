@@ -9,7 +9,7 @@ using Unity.VisualScripting;
 [JsonConverter(typeof(StringEnumConverter))]
 public enum FilePermission
 {
-    Read, Write, Delete, DeleteInner, Manage, ManageInner, Inspect, Create
+    Read, Write, Delete, DeleteInner, Manage, ManageInner, Inspect, Create, Run
 }
 
 public class FilePermissions

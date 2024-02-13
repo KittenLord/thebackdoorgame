@@ -45,8 +45,12 @@ public partial class Computer
 
         public void KillProcess(int pid)
         {
+            //var process = GetProcess(pid);
+            //process?.Application?.OnKilled();
             computer.Processes.Remove(pid);
         }
+
+        public Dictionary<int, Process> GetAllProcesses() => computer.Processes;
 
         public Computer GetComputer() => computer;
 

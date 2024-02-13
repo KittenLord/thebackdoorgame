@@ -215,7 +215,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": true,
+      "IsObfuscated": false,
       "Contents": ""
     },
     {
@@ -224,7 +224,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": true,
+      "IsObfuscated": false,
       "Contents": ""
     },
     {
@@ -325,6 +325,57 @@
       "IsDirectory": false,
       "IsObfuscated": false,
       "Contents": "#EXECUTABLE_HEADER___\nrun"
+    },
+    {
+      "Path": "~/users/admin/desktop/.settings",
+      "Permissions": {
+        "Permissions": {
+          "Read": [
+            "5 admin"
+          ],
+          "Write": [
+            "5 admin"
+          ],
+          "Delete": [],
+          "DeleteInner": [],
+          "Manage": [],
+          "ManageInner": [],
+          "Inspect": [
+            "5 admin"
+          ],
+          "Create": []
+        }
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed/say.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nsay"
+    },
+    {
+      "Path": "~/users/admin/desktop/Terminal.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nterminal\n#"
+    },
+    {
+      "Path": "~/system/installed/task.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ntask"
     }
   ]
 }

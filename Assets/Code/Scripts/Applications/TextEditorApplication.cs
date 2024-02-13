@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class TextEditorApplication : WindowApplication
 {
+    public override string Name => "txt";
     public string FilePath { get; set; }
     public string WorkingDirectory { get; set; }
     public bool Readonly { get; set; }

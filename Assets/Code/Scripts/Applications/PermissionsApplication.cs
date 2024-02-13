@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PermissionsApplication : WindowApplication
 {
+    public override string Name => "perms";
     [SerializeField] private Transform CategoryPrefab;
     [SerializeField] private Transform CategoryParent;
 

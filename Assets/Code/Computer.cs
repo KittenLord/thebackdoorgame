@@ -32,6 +32,11 @@ public class ComputerAccess
     public string Username { get; private set; }
     public int AccessLevel { get; private set; }
 
+    public override string ToString()
+    {
+        return AccessLevel + " " + Username;
+    }
+
     public ComputerAccess Copy() => new ComputerAccess(Username, AccessLevel);
     public ComputerAccess Modify(int accessLevel) => new ComputerAccess(Username, accessLevel);
 }
