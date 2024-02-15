@@ -73,6 +73,7 @@ public class TerminalApplication : WindowApplication
         if(first == "run") RunCommand(args);
         if(first == "say") SayCommand(args);
         if(first == "task") TaskCommand(args);
+        if(first == "unicorn") UnicornCommand(args);
 
         Respond();
     }
@@ -420,6 +421,14 @@ public class TerminalApplication : WindowApplication
 
         //Handle.KillProcess(process.Id);
         process.Application.OnKilled();
+    }
+
+    private void UnicornCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 0)) return;
+
+        var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+        var unicorn = Handle.ProcessWindow(this, Handle.GetProcess(ProcessId).Access.AccessLevel, window, "Unicorn") as UnicornApplication;
     }
 
     

@@ -1,0 +1,401 @@
+{
+  "Ip": "127.0.0.1",
+  "Users": {
+    "USERNAME_REPLACE": {
+      "Username": "USERNAME_REPLACE",
+      "Password": "PASSWORD_REPLACE",
+	  "AccessLevel":5,
+    },
+    "root": {
+      "Username": "root",
+      "Password": "dddddd",
+	  "AccessLevel":5,
+    }
+  },
+  "FileSystem": [
+    {
+      "Path": "~",
+      "Permissions": {
+        "Permissions": {
+          "Inspect": [],
+          "Read": [],
+          "Write": [
+            "root"
+          ],
+          "Delete": [
+            "root"
+          ],
+          "Manage": [
+            "root"
+          ],
+          "Create": [
+            "root"
+          ],
+          "DeleteInner": [
+            "root"
+          ],
+          "ManageInner": [
+            "root"
+          ]
+        }
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/USERNAME_REPLACE",
+      "Permissions": {
+        "Permissions": {
+          "Read": [
+            "USERNAME_REPLACE"
+          ],
+          "Write": [
+            "USERNAME_REPLACE"
+          ],
+          "Delete": [],
+          "Manage": [],
+          "Inspect": [
+            "USERNAME_REPLACE"
+          ],
+          "Create": [
+            "USERNAME_REPLACE"
+          ],
+          "DeleteInner": [
+            "USERNAME_REPLACE"
+          ],
+          "ManageInner": [
+            "USERNAME_REPLACE"
+          ]
+        }
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/USERNAME_REPLACE/desktop",
+      "Permissions": {
+        "Permissions": {
+          "Read": [],
+          "Write": [
+            "root"
+          ],
+          "Delete": [
+            "root"
+          ],
+          "DeleteInner": [
+            "root"
+          ],
+          "Manage": [
+            "root"
+          ],
+          "ManageInner": [
+            "root"
+          ],
+          "Inspect": [],
+          "Create": [
+            "root"
+          ]
+        }
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed/cd.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ncd"
+    },
+    {
+      "Path": "~/system/installed/ls.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nls"
+    },
+    {
+      "Path": "~/system/installed/file.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nfile"
+    },
+    {
+      "Path": "~/system/installed/dir.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ndir"
+    },
+    {
+      "Path": "~/system/installed/txt.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ntxt"
+    },
+    {
+      "Path": "~/system/installed/tree.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ntree"
+    },
+    {
+      "Path": "~/system/installed/auth.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nauth"
+    },
+    {
+      "Path": "~/system/installed/permslist.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\npermslist"
+    },
+    {
+      "Path": "~/system/internal",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/gui.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/boot.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/data",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/data/1.dat",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/data/2.dat",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/data/3.dat",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": true,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/internal/.config",
+      "Permissions": {
+        "Permissions": {
+          "Read": [
+            "root"
+          ],
+          "Write": [],
+          "Delete": [],
+          "Manage": [],
+          "Inspect": [],
+          "Create": []
+        }
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed/perms.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nperms"
+    },
+    {
+      "Path": "~/system/installed/terminal.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nterminal"
+    },
+    {
+      "Path": "~/system/installed/kill.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nkill"
+    },
+    {
+      "Path": "~/system/installed/tms.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ntms"
+    },
+    {
+      "Path": "~/system/installed/run.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nrun"
+    },
+    {
+      "Path": "~/users/USERNAME_REPLACE/desktop/.settings",
+      "Permissions": {
+        "Permissions": {
+          "Read": [
+            "5 USERNAME_REPLACE"
+          ],
+          "Write": [
+            "5 USERNAME_REPLACE"
+          ],
+          "Delete": [],
+          "DeleteInner": [],
+          "Manage": [],
+          "ManageInner": [],
+          "Inspect": [
+            "5 USERNAME_REPLACE"
+          ],
+          "Create": []
+        }
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/system/installed/say.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nsay"
+    },
+    {
+      "Path": "~/users/USERNAME_REPLACE/desktop/Terminal.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nterminal\n#"
+    },
+    {
+      "Path": "~/users/USERNAME_REPLACE/desktop/Unicorn.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nunicorn\n#"
+    },
+    {
+      "Path": "~/system/installed/task.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\ntask"
+    },
+    {
+      "Path": "~/system/installed/unicorn.exe",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "#EXECUTABLE_HEADER___\nunicorn"
+    }
+  ]
+}

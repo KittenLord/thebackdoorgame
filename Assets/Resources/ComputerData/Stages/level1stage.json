@@ -1,0 +1,21 @@
+{
+	"Computers": [],
+	"Networks": [],
+	"Dialogs": [
+		{
+			"Username":"test",
+			"Messages": [
+				{
+					"Content":"message",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"message",
+					"IsImage":false,
+					"Self":true
+				}
+			]
+		}
+	],
+}

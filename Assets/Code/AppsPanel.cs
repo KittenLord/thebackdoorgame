@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,11 +30,11 @@ public class AppsPanel : MonoBehaviour
         foreach(Transform obj in Game.Current.Canvas.transform) windows.Add(obj.GetComponent<Window>());
         windows.RemoveAll(w => w is null);
 
-        var toDelete = Tabs.Where(tab => tab.Window == null);
+        var toDelete = Tabs.Where(tab => tab.Window == null || tab.Window.IsDestroyed());
         var toCreate = windows.Where(window => !Tabs.Any(tab => tab.Window == window));
 
-        Tabs.RemoveAll(l => toDelete.Contains(l));
         foreach(var delete in toDelete) { Destroy(delete.Transform.gameObject); }
+        Tabs.RemoveAll(l => toDelete.Contains(l));
         foreach(var create in toCreate)
         {
             var tab = new Tab(Instantiate(TabPrefab, TabParent), create);

@@ -45,11 +45,13 @@ public class ComputerUser
 {
     public string Username { get; private set; }
     public string Password { get; private set; }
+    public int AccessLevel { get; private set; }
 
-    public ComputerUser(string username, string password)
+    public ComputerUser(string username, string password, int accessLevel)
     {
         Username = username;
         Password = password;
+        AccessLevel = accessLevel;
     }
 }
 
