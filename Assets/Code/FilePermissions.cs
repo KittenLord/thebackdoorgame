@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -29,17 +30,26 @@ public class FilePermissions
     public FilePermissions GetOverridden(FilePermissions overrides)
     {
         var newPerms = new FilePermissions();
+
+        // this is disgusting but its too late to change now
+
         foreach(var key in this.permissions.Keys)
         {
-            // this is disgusting but its too late to change now
             if(key == FilePermission.Manage || key == FilePermission.Delete) continue;
-            if(key == FilePermission.ManageInner)
+            if(key == FilePermission.ManageInner && this[key].Count > 0)
                 newPerms[FilePermission.Manage] = new(this[key]);
-            else if(key == FilePermission.DeleteInner)
+            else if(key == FilePermission.DeleteInner && this[key].Count > 0)
                 newPerms[FilePermission.Delete] = new(this[key]);
             newPerms[key] = new(this[key]);
         }
-        foreach(var key in overrides.permissions.Keys) if(overrides[key].Count > 0) newPerms[key] = new(overrides[key]);
+        foreach(var key in overrides.permissions.Keys) if(overrides[key].Count > 0) { UnityEngine.Debug.Log(this[FilePermission.Manage].FirstOrDefault()); newPerms[key] = new(overrides[key]); }
+        return newPerms;
+    }
+
+    public FilePermissions Copy() 
+    {
+        var newPerms = new FilePermissions();
+        foreach(var key in this.permissions.Keys) newPerms[key] = new(this[key]);
         return newPerms;
     }
 

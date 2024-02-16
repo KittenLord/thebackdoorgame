@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 3219317907412768697}
   - component: {fileID: 7430861403453485587}
   - component: {fileID: 4534742706330006924}
+  - component: {fileID: 491347134971910887}
   m_Layer: 5
   m_Name: MessageList
   m_TagString: Untagged
@@ -203,6 +204,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &491347134971910887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413796058176487093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &1983938516373615659
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3881281258742123193}
   - component: {fileID: 3144052524707708168}
+  - component: {fileID: 8022233742180489432}
   m_Layer: 5
   m_Name: Messages
   m_TagString: Untagged
@@ -433,6 +449,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8022233742180489432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2712370754526538789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &3713127445812603372
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +572,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &5497031544612327313
@@ -920,6 +950,7 @@ MonoBehaviour:
   ContactPrefab: {fileID: 9097953903859663865, guid: 39fa69dc10903f543ad27e580d9c4bfd, type: 3}
   SeparatorPrefab: {fileID: 5120939258165678316, guid: de4cdbd976c86894e89fb2014c8c44db, type: 3}
   ResponseOptionPrefab: {fileID: 4549173191964133942, guid: 30d6f3f49f5586640a433d7afec82796, type: 3}
+  MessageScrollBar: {fileID: 669859803049091113}
   SelectedDialog: 
 --- !u!1 &4914473697476109917
 GameObject:
@@ -1268,7 +1299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
-  m_Softness: {x: 100, y: 0}
+  m_Softness: {x: 0, y: 0}
 --- !u!1 &8181813681087068675
 GameObject:
   m_ObjectHideFlags: 0

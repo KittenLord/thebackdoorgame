@@ -44,7 +44,9 @@ public class PermissionsApplication : WindowApplication
 
         if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Manage, FilePermission.ManageInner)) { Debug.Log("dawdadasd"); return; }
 
-        var editPermissions = file.Permissions.GetOverridden(new());
+        Debug.Log(TargetPath + " " + permissions[FilePermission.Manage].FirstOrDefault());
+        var editPermissions = file.Permissions.Copy();
+        Debug.Log(TargetPath + " " + editPermissions[FilePermission.Manage].FirstOrDefault());
 
         ConfirmButton.onClick.AddListener(() => {
             file.Permissions = editPermissions;

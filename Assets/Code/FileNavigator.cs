@@ -233,6 +233,12 @@ public partial class Computer
             return files.Select(f => f.Path).ToList();
         }
 
+        public List<File> GetEverythingInstalled()
+        {
+            var files = computer.FileSystem.Where(f => f.Path.StartsWith("~/system/installed/"));
+            return files.ToList();
+        }
+
 
 
         public class TreeNode<T>

@@ -10,7 +10,7 @@ public class Process
 {
     public int Id { get; private set; }
     public Application Application { get; private set; }
-    public ComputerAccess Access { get; private set; }
+    public ComputerAccess Access { get; set; }
 
     public Process(int id, Application application, ComputerAccess access)
     {
@@ -29,8 +29,8 @@ public class ComputerAccess
         this.AccessLevel = accessLevel;
     }
 
-    public string Username { get; private set; }
-    public int AccessLevel { get; private set; }
+    public string Username { get; set; }
+    public int AccessLevel { get; set; }
 
     public override string ToString()
     {

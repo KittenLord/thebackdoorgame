@@ -25,7 +25,7 @@ public static class SavedData
     public static bool GetFlag(string flag) => PlayerPrefs.HasKey(flag) && PlayerPrefs.GetInt(flag) != 0;
 
     public static void SetJson(string id, object o) => PlayerPrefs.SetString(id, JsonConvert.SerializeObject(o));
-    public static T GetJson<T>(string id) { try { return JsonConvert.DeserializeObject<T>(PlayerPrefs.GetString(id)); } catch { return default; }}
+    public static T GetJson<T>(string id, System.Func<string, string> edit) { try { return JsonConvert.DeserializeObject<T>(edit(PlayerPrefs.GetString(id))); } catch { return default; }}
 
     public static void RemoveKeys(params string[] keys) => keys.ToList().ForEach(key => PlayerPrefs.DeleteKey(key));
 }

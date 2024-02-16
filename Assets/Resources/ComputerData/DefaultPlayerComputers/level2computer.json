@@ -512,14 +512,12 @@
           "ManageInner": [],
           "Inspect": [],
           "Create": [],
-          "Run": [
-            "root"
-          ]
+          "Run": []
         }
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\nsay #22FF22 \"Your code is: TROPHY1_REPLACE\"\n#"
+      "Contents": "#EXECUTABLE_HEADER___\nsay #22FF22 \"This code has expired, but good job\"\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory/msg.txt",

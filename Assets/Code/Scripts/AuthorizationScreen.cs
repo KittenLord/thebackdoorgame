@@ -57,6 +57,8 @@ public class AuthorizationScreen : MonoBehaviour
             while(timer < 1)
             {
                 cg.alpha = 1 - timer;
+                outer.rotation *= Quaternion.Euler(0, 0, 140 * Time.deltaTime);
+                inner.rotation *= Quaternion.Euler(0, 0, 220 * Time.deltaTime);
                 yield return null;
                 timer += Time.deltaTime;
             }

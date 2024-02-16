@@ -1,21 +1,144 @@
 {
 	"Computers": [],
 	"Networks": [],
+	"SleepFlags": [ "trophy_1_1" ],
+	"Trophies": {
+		"TROPHY1_REPLACE":"trophy_1_1",
+	},
 	"Dialogs": [
 		{
-			"Username":"test",
+			"Username":"computer_guy",
 			"Messages": [
 				{
-					"Content":"message",
+					"Content":"hello",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"are you're that computer guy?",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"yeah, your dad told me about this",
 					"IsImage":false,
 					"Self":false
 				},
 				{
-					"Content":"message",
+					"Content":"I'm not sure why he asked for my help",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"He probably forgot that I am a hacker",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"But from now on this will be what you are doing",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"Tomorrow we'll start, setup your computer in the meanwhile",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"okay",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"ill hit you up",
 					"IsImage":false,
 					"Self":true
 				}
 			]
+		},
+		{
+			"Username":"Dad",
+			"Messages": [
+				{
+					"Content":"hey dad!",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"look what i have",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"yasuo",
+					"IsImage":true,
+					"Self":true
+				},
+				{
+					"Content":"you are a disgrace to our family",
+					"IsImage":false,
+					"Self":false
+				},
+			]
 		}
 	],
+	"GuideStates": [
+		{ "Id":"_", "Type":"Goto", "Args":[ "1" ] },
+		{ "Id":"1", "Type":"Options", "Args":[ "hey, ive set everything up`2`" ] },
+		{ "Id":"2", "Type":"Delay", "Args":[ "3", "9" ] },
+		{ "Id":"3", "Type":"Message", "Args":[ "4", "Good to hear. Let's start then." ] },
+		
+		{ "Id":"4", "Type":"Message", "Args":[ "qEverUsed", "So, have you ever used a terminal?" ] },
+		{ "Id":"qEverUsed", "Type":"Options", "Args":[ "yeah, kinda`qEverUsedYes`", "no`tutorialThorough`" ] },
+		
+		{ "Id":"qEverUsedYes", "Type":"Message", "Args":[ "qTutorialType", "Great! Do you want a quick refresher, a thorough introduction, or go straight to the business?" ] },
+		{ "Id":"qTutorialType", "Type":"Options", "Args":[ "quick`tutorialQuick`", "thorough`tutorialThorough`", "i know what im doing`qTutorialTypeNone`" ] },
+		
+		
+		{ "Id":"tutorialQuick", "Type":"Message", "Args":[ "q1", "Okay, let me give you a quick overview" ] },
+		{ "Id":"q1", "Type":"Message", "Args":[ "q2", "You can use 'cd' and 'ls' to navigate the file tree" ] },
+		{ "Id":"q2", "Type":"Message", "Args":[ "q3", "There's also a 'tree' command, to quickly view the whole directory structure" ] },
+		{ "Id":"q3", "Type":"Message", "Args":[ "q4", "Files have permissions, which can be checked by 'permslist' command and edited by 'perms'" ] },
+		{ "Id":"q4", "Type":"Message", "Args":[ "q5", "If you don't have the required permissions for something, use 'auth' command to change your access level" ] },
+		{ "Id":"q5", "Type":"Message", "Args":[ "q6", "And for last - use 'run' command to run executable files" ] },
+		{ "Id":"q6", "Type":"Message", "Args":[ "q7", "If you need any clarifications, just use 'help' command" ] },
+		{ "Id":"q7", "Type":"Options", "Args":[ "got it`task`" ] },
+		
+		
+		{ "Id":"tutorialThorough", "Type":"Message", "Args":[ "t1", "Let me explain it then" ] },
+		{ "Id":"t1", "Type":"Message", "Args":[ "t2", "Navigating in the terminal is similar to navigating in file explorer." ] },
+		{ "Id":"t2", "Type":"Message", "Args":[ "t3", "You type 'cd folder' to go inside a folder, type 'cd ..' to go back one step" ] },
+		{ "Id":"t3", "Type":"Message", "Args":[ "t4", "And you can even paths straight from the file tree root, like 'cd ~/users/'" ] },
+		{ "Id":"t4", "Type":"Message", "Args":[ "t5", "Type 'tree ~' in your terminal and try navigating through the file system for yourself" ] },
+		{ "Id":"t5", "Type":"Options", "Args":[ "i tried it, lets continue`t6`" ] },
+		{ "Id":"t6", "Type":"Message", "Args":[ "t7", "Great! Now let me tell you about permissions" ] },
+		{ "Id":"t7", "Type":"Message", "Args":[ "t8", "Every file/directory has permissions that limit what you can do with them" ] },
+		{ "Id":"t8", "Type":"Message", "Args":[ "t9", "If a file has permission 'READ: 5 admin', then only user 'admin' with access '5' can read it" ] },
+		{ "Id":"t9", "Type":"Message", "Args":[ "t10", "You can view permissions by typing 'permslist file', and if you have the MANAGE permission, you can edit permissions using 'perms file'" ] },
+		{ "Id":"t10","Type":"Message", "Args":[ "t11", "If you do not have the necessary access level, you can use command 'auth username level', if you have the user password" ] },
+		{ "Id":"t11","Type":"Message", "Args":[ "t12", "Finally, the last thing that you need to know for today, is how to run executables" ] },
+		{ "Id":"t12","Type":"Message", "Args":[ "t13", "If you have the RUN permission, you can use 'run file.exe' to run an executable" ] },
+		{ "Id":"t13","Type":"Message", "Args":[ "t14", "You got everything?" ] },
+		{ "Id":"t14","Type":"Options", "Args":[ "yeah`task1`" ] },
+		
+		
+		{ "Id":"qTutorialTypeNone", "Type":"Message", "Args":[ "task1", "Okay, let's not waste any time." ] },
+		
+		
+		{ "Id":"task", "Type":"Message", "Args":[ "task1", "Okay, now we can start practice" ] },
+		{ "Id":"task1", "Type":"Message", "Args":[ "task2", "Your task is to locate an executable named 'goal.exe' somewhere on your computer and run it." ] },
+		{ "Id":"task2", "Type":"Message", "Args":[ "task3", "It will display a Trophy++ code, you'll claim it and complete the task." ] },
+		{ "Id":"task3", "Type":"Message", "Args":[ "task4", "The task is easy, but not trivial. Expect some challenges ahead." ] },
+		{ "Id":"task4", "Type":"Message", "Args":[ "taskstatus", "Good luck, I'll be waiting for your message." ] },
+		
+		
+		{ "Id":"taskstatus", "Type":"Options", "Args":[ "i did it!`taskdone`trophy_1_1`", "can you explain it again?`qEverUsedYes`" ] },
+		
+		
+		{ "Id":"taskdone", "Type":"Message", "Args":[ "taskdone1", "Good job! We are done for today." ] },
+		{ "Id":"taskdone1", "Type":"Message", "Args":[ "end", "I'll give you next task tomorrow, for now you can log off." ] },
+		
+		
+		{ "Id":"end", "Type":"End", "Args":[] },
+	]
 }

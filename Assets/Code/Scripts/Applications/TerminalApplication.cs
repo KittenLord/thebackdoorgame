@@ -18,7 +18,7 @@ public class TerminalApplication : WindowApplication
 
     private Computer.FileNavigator navigator;
 
-    private bool Hide = false;
+    private bool HideInput = false;
     public bool Initialized { get; private set; } = false;
     private bool StealInput = false;
     private System.Action<string> CustomInputHandler;
@@ -30,6 +30,12 @@ public class TerminalApplication : WindowApplication
         navigator = Handle.GetNavigator(ProcessId);
         if(navigator.Goto($"~/users/{Handle.GetProcess(ProcessId).Access.Username}") is not null) navigator.Goto("~");
         Initialized = true;
+
+        if(HideInput) return;
+        var process = Handle.GetProcess(ProcessId);
+        Log($"({process.Access.AccessLevel} {process.Access.Username}) Logged in as {process.Access.Username} with access level {process.Access.AccessLevel}");
+        var prefix = process.Access.AccessLevel + "$" + process.Access.Username;
+        Log($"<color=#AAAAAA>{prefix} {navigator.Path} > </color>");
     }
 
     public int LastId { get; private set; }
@@ -41,7 +47,7 @@ public class TerminalApplication : WindowApplication
 
         string command = line;
         var prefix = Handle.GetProcess(this.ProcessId).Access.AccessLevel + "$" + Handle.GetProcess(this.ProcessId).Access.Username;
-        Log($"<color=#AAAAAA>{prefix} {navigator.Path} > </color>" + line);
+        if(!HideInput) Log($"<color=#AAAAAA>{prefix} {navigator.Path} > </color>" + line);
         Input.text = "";
 
         if(command.StartsWith("#")) { Respond(); return; }
@@ -74,13 +80,16 @@ public class TerminalApplication : WindowApplication
         if(first == "say") SayCommand(args);
         if(first == "task") TaskCommand(args);
         if(first == "unicorn") UnicornCommand(args);
+        if(first == "help") HelpCommand(args);
+        if(first == "trophypp") TrophyCommand(args);
 
         Respond();
     }
 
     private async void LogRaw(string message)
     {
-        if(!Hide) ScrollText.text += message;        
+        //Debug.Log("LOG " + message);
+        ScrollText.text += message;        
 
         // Refocus on the input
         EventSystem.current.SetSelectedGameObject(Input.gameObject, null);
@@ -203,9 +212,17 @@ public class TerminalApplication : WindowApplication
 
     private void AuthCommand(List<string> args)
     {
-        if(!CheckArgumentCount(args.Count, 1)) return;
+        if(!CheckArgumentCount(args.Count, 1, 2, 3)) return;
         if(!Handle.UserExists(args[0])) { LogDefaultError($"User with username {args[0]} does not exist."); return; }
+        if(args.Count == 3 && args[2] != "this" && args[2] != "new") { LogArgumentError(3, "[new|this]", args[2]); }
+        if(args.Count > 1 && !int.TryParse(args[1], out _) && args[1] != "max" ) { LogArgumentError(2, "[0|1|2|3|4|5|max]", args[1]); }
+        if(args.Count > 1 && int.TryParse(args[1], out var tempppp) && Handle.GetUserMaxAccess(args[0]) < tempppp) { LogDefaultError($"User {args[0]} doesn't have access level {args[1]}"); }
         
+        // literal warcrime of a line
+        int access = args.Count > 1 ? (int.TryParse(args[1], out var value) ? value : Handle.GetUserMaxAccess(args[0]) ?? 0) : 0;
+        // TODO possibly change default to "this"
+        bool openNew = args.Count == 3 && args[2] == "new";
+
         LogRaw($"\nInsert password for user {args[0]}: ");
 
         StealInput = true;
@@ -225,9 +242,21 @@ public class TerminalApplication : WindowApplication
             var verify = Handle.VerifyUser(args[0], password);
             if(!verify) { LogError($"Incorrect password for user {args[0]}"); return; }
 
-            var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
-            Handle.ProcessWindow(args[0], password, 0, window, "Terminal");
-            this.OnKilled();
+            if(openNew)
+            {
+                var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+                Handle.ProcessWindow(args[0], password, access, window, "Terminal");
+                this.OnKilled();
+            }
+            else
+            {
+                var result = Handle.UpdateProcessAccess(args[0], password, access, this);
+                if (!result) LogError("Something went wrong.");
+                else
+                {
+                    Log($"Logged in as {args[0]} with access level {access}");
+                }
+            };
         };
     }
 
@@ -241,7 +270,11 @@ public class TerminalApplication : WindowApplication
         if(!permissions.Fit(this.Handle.GetProcess(ProcessId).Access, FilePermission.Inspect)) { LogDefaultError("Can't access this file"); return; }
         var categories = System.Enum.GetValues(typeof(FilePermission)).Cast<FilePermission>().ToList();
 
-        foreach(var category in categories) Log($"{category.ToString().ToUpper()}: {string.Join(", ", permissions[category])}");
+        foreach(var category in categories) 
+        {
+            string rights = string.Join(", ", permissions[category].DefaultIfEmpty() ?? new string[] { "EVERYONE" });
+            Log($"{category.ToString().ToUpper()}: {rights}");
+        }
     }
 
     private void TerminalCommand(List<string> args)
@@ -296,23 +329,23 @@ public class TerminalApplication : WindowApplication
         
         var result = navigator.GetFilePermissions(path, out var p);
         if(result is not null) { LogDefaultError(result.ToString()); return; }
-        if(!p.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Inspect, FilePermission.Read, FilePermission.Run)) { LogDefaultError("Forbidden."); return; }
+        if(!p.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Inspect, FilePermission.Read, FilePermission.Run)) { LogDefaultError("You don't have required permissions to run this executable."); return; }
 
         string scriptAddendum = "";
         if(args.Count > 2) { scriptAddendum = string.Join("", args.TakeLast(args.Count - 2).Select(s => " " + s)); }
         scriptAddendum = scriptAddendum.Replace("\n", "").Replace("\r", ""); // prevent from injection
 
         var script = (navigator.GetFile(path).Contents + scriptAddendum).Split("\n").Select(s => s.Trim()).ToList();
-        var hide = script.Contains("#hide");
+        var hide = !script.Contains("#show");
         if(script.FirstOrDefault() != "#EXECUTABLE_HEADER___") { LogError("Fatal error: executable's signature is invalid."); return; }
 
-        var mode = args.Count >= 2 ? args[1] : "new";
+        var mode = args.Count >= 2 ? args[1] : "this";
 
         if(mode == "new")
         {
             var window = Instantiate(Game.Current.WindowPrefab, this.transform);
             var terminal = Handle.ProcessWindow(this, this.Handle.GetProcess(ProcessId).Access.AccessLevel, window, "Terminal") as TerminalApplication;
-            terminal.Hide = hide;
+            terminal.HideInput = hide;
             window.transform.position = new Vector3(0, 1, 0) * 20000;
 
             while (!terminal.Initialized) await System.Threading.Tasks.Task.Delay(50);
@@ -331,7 +364,7 @@ public class TerminalApplication : WindowApplication
         }
         else if(mode == "this")
         {
-            this.Hide = hide;
+            this.HideInput = hide;
             foreach (var line in script)
             {
                 if(line.StartsWith("#")) continue;
@@ -344,7 +377,7 @@ public class TerminalApplication : WindowApplication
                 Input.interactable = false;
             }
             Input.interactable = true;
-            this.Hide = false;
+            this.HideInput = false;
         }
         else
         {
@@ -366,6 +399,7 @@ public class TerminalApplication : WindowApplication
         }
         System.Text.RegularExpressions.Regex colorRegex = new(@"\#([0-9]|[A-F]|[a-f]){6}");
         if(!colorRegex.IsMatch(args[0])) { LogArgumentError(1, "color #RRGGBB", args[0]); return; }
+        Debug.Log("can say");
         Log(args[1], args[0].Replace("#", "").ToUpper());
     }
 
@@ -429,6 +463,43 @@ public class TerminalApplication : WindowApplication
 
         var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
         var unicorn = Handle.ProcessWindow(this, Handle.GetProcess(ProcessId).Access.AccessLevel, window, "Unicorn") as UnicornApplication;
+    }
+
+    private void HelpCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 0, 1)) return;
+        if(args.Count == 1) { HelpCommand(args[0]); return; }
+
+        var files = navigator.GetEverythingInstalled();
+        foreach(var file in files)
+        {
+            string name = file.Path.Split("/").Last().Split(".").First();
+            string description = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#desc")).Split(" ", 2)[1];
+            Log($"{name} - {description}");
+        }
+    }
+
+    private void HelpCommand(string commandName)
+    {
+        var file = navigator.GetFile($"~/system/installed/{commandName}.exe");
+        if(file is null) { LogDefaultError($"{commandName} is not a registered command."); return; }
+
+        var help = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#help")).Split(" ", 2)[1].Split("\\n");
+        Log("");
+        foreach(var line in help)
+        {
+            var msg = line.Split("# ", 2);
+            Log(msg[0]);
+            if(msg.Length > 1) LogRaw("# " + msg[1], "AAAAAA");
+        }
+    }
+
+    private void TrophyCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 0)) return;
+
+        var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+        var unicorn = Handle.ProcessWindow(this, Handle.GetProcess(ProcessId).Access.AccessLevel, window, "TrophyPlusPlus") as TrophyApplication;
     }
 
     

@@ -26,6 +26,9 @@ public class UnicornApplication : WindowApplication
     [SerializeField] private Transform ResponseOptionPrefab;
 
 
+    [SerializeField] private Scrollbar MessageScrollBar;
+
+
     private Dictionary<string, Image> contacts = new();
 
 
@@ -43,6 +46,8 @@ public class UnicornApplication : WindowApplication
         foreach(var dialog in dialogs)
         {
             var contact = Instantiate(ContactPrefab, ContactsParent);
+            string id = dialog.Username;
+            contact.GetComponent<Button>().onClick.AddListener(() => { SelectConversation(id); });
             Instantiate(SeparatorPrefab, ContactsParent);
             contacts.Add(dialog.Username, contact.GetComponent<Image>());
             contact.GetChild(1).GetComponent<TMP_Text>().text = dialog.Username;
@@ -55,18 +60,60 @@ public class UnicornApplication : WindowApplication
         if(d is not null) SelectConversation(d.Username);
     }
 
-    async void SelectConversation(string selectedDialog)
+    public void OnMessage(string username, bool newMessage)
     {
-        foreach(var c in contacts.Values) c.color = new Color(0, 0, 0);
-        if(contacts.ContainsKey(selectedDialog)) contacts[selectedDialog].color = new Color(0.2f, 0.2f, 0.2f);
+        if(SelectedDialog != username) return;
+        if(newMessage) Sound.Main.Play("SFX/message", Sound.Tag.SFX, true);
+        SelectConversation(username);
+    }
+
+    void OnDestroy()
+    {
+        ReceivedMessage -= OnMessage;
+    }
+
+    public static event Action<string, bool> ReceivedMessage = (s, n) => {};
+    public static void ReceiveMessage(string s, bool newMessage) => ReceivedMessage.Invoke(s, newMessage);
+
+    int D = 0;
+    void SelectConversation(string selectedDialog)
+    {
+        try{
+        Debug.Log(D++);
+
+        var oldSelectedDialog = SelectedDialog;
+        SelectedDialog = selectedDialog;
+        ClearSelection();
+        foreach(var c in contacts.Values) c.color = new Color(1, 1, 1);
+        if(contacts.ContainsKey(selectedDialog)) contacts[selectedDialog].color = new Color(0.8f, 0.8f, 0.8f);
 
         var dialogs = Game.Current.Stage.Dialogs;
-        var dialog = dialogs.FirstOrDefault();
+        var dialog = dialogs.FirstOrDefault(d => d.Username == selectedDialog);
+        if(dialog is null) dialog = dialogs.FirstOrDefault();
         if(dialog is null) return;
 
-        ClearSelection();
 
-        foreach(var msg in dialog.Messages)
+        for(int i = 0; i < Game.Current.UserOptions.Count; i++)
+        {
+            if(SelectedDialog != Game.GuideUsername) break;
+            int n = i; 
+            var option = Game.Current.UserOptions[i];
+            if(option == "") continue;
+            var r = Instantiate(ResponseOptionPrefab, ResponsesParent);
+            r.GetChild(0).GetComponent<TMP_Text>().text = option;
+            r.GetComponent<Button>().onClick.AddListener(() => { 
+                Game.Current.UserResponse = n; 
+                Game.Current.Stage.Dialogs.Find(d => d.Username == Game.GuideUsername).Messages.Add(new DialogMessage(option, false, true));
+                Game.Current.UserOptions = new();
+                foreach(Transform o in ResponsesParent) Destroy(o.gameObject);
+                UnicornApplication.ReceiveMessage(Game.GuideUsername, false);
+            });
+        }
+
+        //ReloadLayouts();
+
+        var messages = new List<DialogMessage>(dialog.Messages);
+        foreach(var msg in messages)
         {
             Transform tmsg = null;
             if(!msg.Self && !msg.IsImage) tmsg = Instantiate(TextMessageLeftPrefab, MessagesParent);
@@ -81,15 +128,15 @@ public class UnicornApplication : WindowApplication
                 var sprite = LoadImage(msg.Content);
                 img.sprite = sprite;
                 var rect = img.GetComponent<RectTransform>();
-                // dunno how to do this, will finish later
-                // TODO
+
+                while(rect.rect.width < 400) { rect.sizeDelta *= 1.2f; }
             }
         }
 
-        var layout = MessagesParent.GetComponent<VerticalLayoutGroup>();
-        layout.enabled = false;
-        await System.Threading.Tasks.Task.Delay(5);
-        layout.enabled = true;
+        ReloadLayouts();
+
+        if(oldSelectedDialog != SelectedDialog) MessageScrollBar.value = 0;
+        }catch(Exception e){Debug.Log(e);}
     }
 
     Sprite LoadImage(string image)
@@ -103,10 +150,16 @@ public class UnicornApplication : WindowApplication
         foreach(Transform r in ResponsesParent) Destroy(r.gameObject);
     }
 
-    void OnMessage(DialogMessage msg)
+    async void ReloadLayouts()
     {
+        var layout = MessagesParent.GetComponent<VerticalLayoutGroup>();
+        var l = ResponsesParent.GetComponent<HorizontalLayoutGroup>();
+        layout.enabled = false;
+        l.enabled = false;
 
+        await System.Threading.Tasks.Task.Delay(5);
+
+        layout.enabled = true;
+        l.enabled = true;
     }
-
-    public static event Action<DialogMessage> ReceivedMessage = (m) => {};
 }

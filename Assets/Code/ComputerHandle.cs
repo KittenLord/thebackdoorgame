@@ -50,12 +50,21 @@ public partial class Computer
             computer.Processes.Remove(pid);
         }
 
+        public bool UpdateProcessAccess(string username, string password, int access, Application application)
+        {
+            if(!VerifyUser(username, password)) return false;
+            var process = GetProcess(application.ProcessId);
+            process.Access.Username = username;
+            process.Access.AccessLevel = access;
+            return true;
+        }
+
         public Dictionary<int, Process> GetAllProcesses() => computer.Processes;
 
         public Computer GetComputer() => computer;
 
         public bool UserExists(string user) => computer.Users.ContainsKey(user);
-
+        public int? GetUserMaxAccess(string user) => UserExists(user) ? computer.Users[user].AccessLevel : null;
         public Process GetProcess(int pid) => computer.Processes.ContainsKey(pid) ? computer.Processes[pid] : null;
         public FileNavigator GetNavigator(int pid) => new FileNavigator(computer, computer.Processes[pid].Access);
         public string GetIp() => computer.Ip;

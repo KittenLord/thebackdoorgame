@@ -40,13 +40,17 @@ public class AppsPanel : MonoBehaviour
             var tab = new Tab(Instantiate(TabPrefab, TabParent), create);
             tab.Transform.GetChild(1).GetComponent<TMP_Text>().text = create.Title.text;
             tab.Transform.GetComponent<Button>().onClick.AddListener(() => {
-                if(tab.Window.transform.position.y < -10000) tab.Window.transform.position += new Vector3(0, 1, 0) * 20000;
+                if(tab.Window.transform.position.y < -10000) 
+                { 
+                    tab.Window.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
+                    // tab.Window.transform.position += new Vector3(0, 1, 0) * 20000;
+                }
                 else tab.Window.transform.position -= new Vector3(0, 1, 0) * 20000;
             });
 
             Tabs.Add(tab);
         }
 
-        transform.SetAsLastSibling();
+        transform.parent.SetAsLastSibling();
     }
 }
