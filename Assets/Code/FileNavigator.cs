@@ -13,7 +13,9 @@ public enum FileSystemError
     InvalidPath,
     FatalError,
     BadFileName,
-    FileIsDirectory
+    FileIsDirectory,
+    FileExists,
+    PortAlreadyOpened,
 }
 
 public partial class Computer
@@ -182,26 +184,122 @@ public partial class Computer
         public FileSystemError? CreateFile(string path, bool isDirectory, out string filePath)
         {
             filePath = "";
-            var oldPath = this.Path;
-            if(!IsValidPath(path)) return FileSystemError.InvalidPath;
-            
-            var split = path.Split("/").ToList();
-            var fileName = split.Last();
-            if(!IsValidFileName(fileName) || fileName == "~" || fileName.StartsWith("..")) return FileSystemError.BadFileName;
-            split.RemoveAt(split.Count - 1);
-            path = string.Join("/", split);
+            path = GetModifiedPath(this.Path, path);
+            filePath = path;
+            if(path is null) { return FileSystemError.InvalidPath; }
+            if(path == "~") return FileSystemError.InvalidPath;
+            var directoryPath = string.Join("/", path.Split("/").Take(path.Split("/").Length - 1));
 
-            var result = this.Navigate(path);
+            var result = GetFilePermissions(directoryPath, out var directoryPermissions);
             if(result is not null) return result;
+            if(!directoryPermissions.Fit(this.access, FilePermission.Create, FilePermission.Inspect)) return FileSystemError.Forbidden;
+            if(GetFile(path) is not null) return FileSystemError.FileExists;
 
-            var result2 = GetFilePermissions(this.Path, out var permissions);
-            if(result2 is not null) return result2;
+            computer.FileSystem.Add(new File(path, new(), isDirectory, false));
+            return null;
 
-            if(!permissions.Fit(this.access, FilePermission.Create)) return FileSystemError.Forbidden;
 
-            filePath = this.Path + "/" + fileName;
-            computer.FileSystem.Add(new File(filePath, new(), isDirectory));
-            this.Navigate(oldPath);
+
+
+            // How did this garbage code stay for so long lol
+
+            // filePath = "";
+            // var oldPath = this.Path;
+            // if(!IsValidPath(path)) return FileSystemError.InvalidPath;
+            
+            // var split = path.Split("/").ToList();
+            // var fileName = split.Last();
+            // if(!IsValidFileName(fileName) || fileName == "~" || fileName.StartsWith("..")) return FileSystemError.BadFileName;
+            // split.RemoveAt(split.Count - 1);
+            // path = string.Join("/", split);
+
+            // var result = this.Navigate(path);
+            // if(result is not null) return result;
+
+            // var result2 = GetFilePermissions(this.Path, out var permissions);
+            // if(result2 is not null) return result2;
+
+            // if(!permissions.Fit(this.access, FilePermission.Create)) return FileSystemError.Forbidden;
+
+            // filePath = this.Path + "/" + fileName;
+            // computer.FileSystem.Add(new File(filePath, new(), isDirectory));
+            // this.Navigate(oldPath);
+            // return null;
+        }
+
+        public FileSystemError? RenameFile(string path, string fileName)
+        {
+            if(!IsValidFileName(fileName) || fileName == "~") return FileSystemError.BadFileName;
+            path = GetModifiedPath(this.Path, path);
+            if(path is null) return FileSystemError.InvalidPath;
+            var result = GetFilePermissions(path, out var permissions);
+            if(result is not null) return result;
+            if(!permissions.Fit(this.access, FilePermission.Inspect, FilePermission.Rename)) return FileSystemError.Forbidden;
+            var newPath = string.Join("/", path.Split("/").Take(path.Split("/").Length - 1)) + "/" + fileName;
+            if(GetFile(newPath) is not null) return FileSystemError.FileExists;
+            foreach(var file in computer.FileSystem) file.Path = file.Path.Replace(path, newPath);
+            return null;
+        }
+
+        public FileSystemError? DeleteFile(string path, out bool complete)
+        {
+            complete = false;
+            var origin = GetModifiedPath(this.Path, path);
+            var file = GetFile(origin);
+            if(file is null) { complete = true; return FileSystemError.InvalidPath; }
+            var result = GetFilePermissions(origin, out var permissions);
+            if(result is not null) { complete = true; return result; }
+
+            if(!file.IsDirectory)
+            {
+                if(!permissions.Fit(this.access, FilePermission.Inspect, FilePermission.Delete)) return FileSystemError.Forbidden; 
+                complete = true;
+                computer.FileSystem.Remove(file);
+                return null;
+            }
+
+            var children = computer.FileSystem
+                .Where(f => f.Path.StartsWith(origin + "/"))
+                .Where(f => f.Path.Count(c => c == '/') - origin.Count(c => c == '/') == 1)
+                .ToList();
+            complete = true;
+            foreach(var child in children)
+            {
+                DeleteFile(child.Path, out var tempResult);
+                complete &= tempResult;
+            }
+            if(complete)
+            {
+                if(!permissions.Fit(this.access, FilePermission.Inspect, FilePermission.Delete)) return FileSystemError.Forbidden; 
+                complete = true;
+                computer.FileSystem.Remove(file);
+            }
+            return null;
+        }
+
+        public FileSystemError? OpenPort(int port, string filePath)
+        {
+            if(computer.Ports.ContainsKey(port)) return FileSystemError.PortAlreadyOpened;
+            filePath = GetModifiedPath(this.Path, filePath);
+            if(filePath is null) return FileSystemError.InvalidPath;
+
+            var result = GetFilePermissions(filePath, out var permissions);
+            if(result is not null) return result;
+            if(!permissions.Fit(this.access, FilePermission.Read, FilePermission.Inspect)) return FileSystemError.Forbidden;
+            if(filePath == "~") return FileSystemError.BadFileName;
+
+            var file = GetFile(filePath);
+            if(file is null) return FileSystemError.InvalidPath;
+            if(file.IsDirectory) return FileSystemError.FileIsDirectory;
+
+            var fileName = filePath.Split("/").Last();
+            computer.Ports[port] = new File(fileName, new(), false, file.IsObfuscated, file.Contents);
+            return null;
+        }
+
+        public FileSystemError? ClosePort(int port)
+        {
+            computer.Ports.Remove(port);
             return null;
         }
 

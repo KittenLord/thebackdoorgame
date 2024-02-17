@@ -57,11 +57,15 @@ public class ComputerUser
 
 public partial class Computer
 {
+    // at this point might as well make everything public lol
+    // here goes shitcode
     [JsonProperty] public string Ip { get; private set; }
-    [JsonProperty] private Dictionary<string, ComputerUser> Users { get; set; } = new();
-    [JsonProperty] private List<File> FileSystem { get; set; } = new();
+    [JsonProperty] public Dictionary<string, ComputerUser> Users { get; set; } = new();
+    [JsonProperty] public List<File> FileSystem { get; set; } = new(); // i feel dirty making this public...
 
-    private Dictionary<int, Process> Processes { get; set; } = new();
+    [JsonIgnore] public Dictionary<int, File> Ports = new();
+
+    [JsonIgnore] public Dictionary<int, Process> Processes { get; set; } = new();
 
     private bool AddProcess(string username, string password, int accessLevel, Application application)
     {

@@ -1,9 +1,18 @@
 {
-  "Ip": "127.0.0.1",
+	"Computers": [
+		{ "Ip":"MARIOIP_REPLACE" },
+		
+		
+		
+		
+		
+		
+	{
+  "Ip": "TARGETIP_REPLACE",
   "Users": {
-    "USERNAME_REPLACE": {
-      "Username": "USERNAME_REPLACE",
-      "Password": "PASSWORD_REPLACE",
+    "mandragon1002": {
+      "Username": "mandragon1002",
+      "Password": "TARGETPASSWORD_REPLACE",
       "AccessLevel": 5
     },
     "root": {
@@ -76,21 +85,33 @@
     {
       "Path": "~/users",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Manage": [],
+          "Read": [],
+          "Write": [],
+          "Delete": [],
+          "DeleteInner": [],
+          "ManageInner": [],
+          "Rename": [],
+          "RenameInner": [],
+          "Inspect": [],
+          "Create": [],
+          "Run": []
+        }
       },
       "IsDirectory": true,
       "IsObfuscated": false,
       "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE",
+      "Path": "~/users/mandragon1002",
       "Permissions": {
         "Permissions": {
           "Read": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "Write": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "Delete": [
             "root"
@@ -99,62 +120,26 @@
             "root"
           ],
           "Inspect": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "Create": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "DeleteInner": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "ManageInner": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "Rename": [
             "root"
           ],
           "RenameInner": [
-            "USERNAME_REPLACE"
+            "mandragon1002"
           ],
           "Run": [
+            "mandragon1002"
           ]
-        }
-      },
-      "IsDirectory": true,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/desktop",
-      "Permissions": {
-        "Permissions": {
-          "Read": [],
-          "Write": [
-            "root"
-          ],
-          "Delete": [
-            "root"
-          ],
-          "DeleteInner": [
-            "root"
-          ],
-          "Manage": [
-            "root"
-          ],
-          "ManageInner": [
-            "root"
-          ],
-          "Inspect": [],
-          "Create": [
-            "root"
-          ],
-          "Rename": [
-            "root"
-          ],
-          "RenameInner": [
-            "root"
-          ],
-          "Run": []
         }
       },
       "IsDirectory": true,
@@ -195,7 +180,9 @@
     {
       "Path": "~/system/installed/file.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Inspect": []
+        }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -204,7 +191,9 @@
     {
       "Path": "~/system/installed/rename.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Inspect": []
+        }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -213,7 +202,9 @@
     {
       "Path": "~/system/installed/del.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Inspect": []
+        }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -222,7 +213,9 @@
     {
       "Path": "~/system/installed/dir.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Inspect": []
+        }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -231,7 +224,9 @@
     {
       "Path": "~/system/installed/txt.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Inspect": []
+        }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -241,7 +236,8 @@
       "Path": "~/system/installed/tree.exe",
       "Permissions": {
         "Permissions": {
-          "Inspect": []
+          "Inspect": [],
+          "Run": []
         }
       },
       "IsDirectory": false,
@@ -263,24 +259,13 @@
     {
       "Path": "~/system/installed/permslist.exe",
       "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc View file permissions\n#help permslist is used to quickly check what permissions a file or a directory has. It requires 0 or 1 path argument.\\nSyntax: permslist [path]\\nExamples:\\npermslist file.txt # Displays permissions of a file named \"file.txt\"\\npermslist ~/users/admin # Displays permissions of the specified directory.\\npermslist # Displays permissions of the current directory\npermslist"
-    },
-    {
-      "Path": "~/system/installed/remct.exe",
-      "Permissions": {
         "Permissions": {
-          "Inspect": [
-            "root"
-          ]
+          "Inspect": []
         }
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc Connect remotely to other computers\n#help remct is used to connect and manage other computers. You'll need to know user credentials to connect though.\\nSyntax: remct <ip> <username>\\nExamples:\\nremct 127.0.0.1 admin # Connects to ip 127.0.0.1 and prompts to login to admin user\nremct"
+      "Contents": "#EXECUTABLE_HEADER___\n#desc View file permissions\n#help permslist is used to quickly check what permissions a file or a directory has. It requires 0 or 1 path argument.\\nSyntax: permslist [path]\\nExamples:\\npermslist file.txt # Displays permissions of a file named \"file.txt\"\\npermslist ~/users/admin # Displays permissions of the specified directory.\\npermslist # Displays permissions of the current directory\npermslist"
     },
     {
       "Path": "~/system/internal",
@@ -377,10 +362,7 @@
     {
       "Path": "~/system/installed/terminal.exe",
       "Permissions": {
-        "Permissions": {
-          "Inspect": [],
-          "Run": []
-        }
+        "Permissions": {}
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -396,25 +378,9 @@
       "Contents": "#EXECUTABLE_HEADER___\n#desc Kill the terminal process\n#help kill is used to kill the terminal you are in.\\nSyntax: kill\\nExamples:\\nkill # Kills the terminal.\nkill"
     },
     {
-      "Path": "~/system/installed/tms.exe",
-      "Permissions": {
-        "Permissions": {
-          "Inspect": [
-            "root"
-          ]
-        }
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc TerMinal Script (TMS) compiler\n#help tms is used to compile the TerMinal Script (TMS) scripts into executable files. TMS scripts are a list of terminal commands, executed in a sequence. tms requires 1 path argument: source script.\\nSyntax: tms <path>\\nExamples: tms file.tms # Compile a file named \"file.tms\" into an executable named \"file.exe\"\\ntms ~/users/admin/file.tms # Compile a file named \"file.tms\" into an executable named \"file.exe\"\ntms"
-    },
-    {
       "Path": "~/system/installed/run.exe",
       "Permissions": {
-        "Permissions": {
-          "Inspect": [],
-          "Run": []
-        }
+        "Permissions": {}
       },
       "IsDirectory": false,
       "IsObfuscated": false,
@@ -430,30 +396,6 @@
       "Contents": "#EXECUTABLE_HEADER___\n#desc Help command\n#help help is used to list all available commands and display info about them, or to provide help a specific command.\\nSyntax: help [command]\\nExamples:\\nhelp # Lists all installed commands\\nhelp cd # Provides help on cd command\nhelp"
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/desktop/.settings",
-      "Permissions": {
-        "Permissions": {
-          "Read": [
-            "5 USERNAME_REPLACE"
-          ],
-          "Write": [
-            "5 USERNAME_REPLACE"
-          ],
-          "Delete": [],
-          "DeleteInner": [],
-          "Manage": [],
-          "ManageInner": [],
-          "Inspect": [
-            "5 USERNAME_REPLACE"
-          ],
-          "Create": []
-        }
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
       "Path": "~/system/installed/say.exe",
       "Permissions": {
         "Permissions": {}
@@ -461,33 +403,6 @@
       "IsDirectory": false,
       "IsObfuscated": false,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Display user text\n#help say is used to display the specified text in the terminal. It requires 2 arguments: color and text in double-quotes.\\nSyntax: say <color> \"<text>\"\\nExamples:\\nsay #FFFFFF \"test test\" # Displays \"test test\" in color white\\nsay #FF0000 \"error error\" # Displays \"error error\" in color red.\nsay"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/desktop/Terminal.exe",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nterminal\n#"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/desktop/Unicorn.exe",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nunicorn\n#"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/desktop/TrophyPlusPlus.exe",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\ntrophypp\n#"
     },
     {
       "Path": "~/system/installed/task.exe",
@@ -499,56 +414,16 @@
       "Contents": "#EXECUTABLE_HEADER___\n#desc A CLI task manager\n#help task is used to manage processes running on the computer. It runs in several modes: task list, task kill.\\ntask list is used to list all tasks on the computer.\\ntask kill is used to kill the specified process if you have enough rights to do so. Requires the provess PID, which can be viewed by using \"task list\".\\nSyntax: task <list|kill> [pid]\\nExamples:\\ntask list # List all tasks\\ntask kill 12831831623 # Kill the process with the specified process id\ntask"
     },
     {
-      "Path": "~/system/installed/mario.exe",
-      "Permissions": {
-        "Permissions": {
-          "Inspect": [
-            "root"
-          ]
-        }
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc A package manager\n#help mario is a simple package manager.\\nmario install downloads the specified package\\nmario list shows all available packages\\nSyntax:\\nmario install <package>\\nmario list\\nExamples:\\nmario install unicorn # Installs Unicorn\\nmario list # Displays all available packages\nmario"
-    },
-    {
       "Path": "~/system/installed/port.exe",
       "Permissions": {
         "Permissions": {}
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc A port utility to manage files\n#help port is a utility to upload and download files using computer ports. There are several subcommands: port open, port close, port download\\nport open opens the specified port and uploads a file\\nport close closes an opened port\\nport download fetches file from other computer's port\\nSyntax:\\nport open <port> <file>\\nport close <port>\\nport download <ip> <port>\\nExamples:\\nport open 12415 file.txt # Opens port 12415 and uploads file named file.txt\\nport close 12415 # Closes port 12415\\nport download 127.0.0.1 8080 # Downloads a file located on port 8080 on computer with ip 127.0.0.1\nport"
+      "Contents": "#EXECUTABLE_HEADER___\n#desc A port utility\n#help port is a utility to upload and download files using computer ports. There are several subcommands: port open, port close, port download\\nport open opens the specified port and uploads a file\\nport close closes an opened port\\nport download fetches file from other computer's port\\nSyntax:\\nport open <port> <file>\\nport close <port>\\nport download <ip> <port>\\nExamples:\\nport open 12415 file.txt # Opens port 12415 and uploads file named file.txt\\nport close 12415 # Closes port 12415\\nport download 127.0.0.1 8080 # Downloads a file located on port 8080 on computer with ip 127.0.0.1\nport"
     },
     {
-      "Path": "~/system/installed/unicorn.exe",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc A simple messenger\n#help unicorn is a lightweight, end-to-end encrypted messenger.\\nSyntax: unicorn\\nExamples:\\nunicorn # Starts Unicorn \nunicorn"
-    },
-    {
-      "Path": "~/system/installed/trophypp.exe",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "#EXECUTABLE_HEADER___\n#desc A trophy gifting app\n#help Trophy++ is an improved version of Trophy to give awards to your colleagues.\\nSyntax: trophypp\\nExamples:\\ntrophypp # Starts Trophy++ \ntrophypp"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/test.txt",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/notes",
+      "Path": "~/users/mandragon1002/saved_data",
       "Permissions": {
         "Permissions": {}
       },
@@ -557,7 +432,25 @@
       "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/stuff",
+      "Path": "~/users/mandragon1002/saved_data/u1.dat",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/saved_data/u2.dat",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/saved_data/u",
       "Permissions": {
         "Permissions": {}
       },
@@ -566,121 +459,142 @@
       "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/notes/note.txt",
+      "Path": "~/users/mandragon1002/saved_data/u/.set",
       "Permissions": {
         "Permissions": {}
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "todo: hit silver 2 in league before wednesday"
+      "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/notes/note1.txt",
+      "Path": "~/users/mandragon1002/saved_data/u/.config",
       "Permissions": {
         "Permissions": {}
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "minecraft 1.7.10\nindustrial craft 2\nbuildcraft\nto be expanded"
+      "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory",
+      "Path": "~/users/mandragon1002/saved_data/u/credentials",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/personal",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/personal/notes.txt",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "i have a lot of data on this computer\ni sure do hope nobody hacks into this computer"
+    },
+    {
+      "Path": "~/users/mandragon1002/personal/man.dragon",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "1002"
+    },
+    {
+      "Path": "~/users/mandragon1002/.env",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/important",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/important/passwords.txt",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "put passwords here later"
+    },
+    {
+      "Path": "~/users/mandragon1002/important/DO",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/important/DO/NOT",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/important/DO/NOT/OPEN",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": true,
+      "IsObfuscated": false,
+      "Contents": ""
+    },
+    {
+      "Path": "~/users/mandragon1002/important/DO/NOT/OPEN/DOOMSDAY.exe",
       "Permissions": {
         "Permissions": {
-          "Read": [],
-          "Write": [],
-          "Delete": [
-            "root"
-          ],
-          "DeleteInner": [
-            "root"
-          ],
           "Manage": [
             "root"
           ],
-          "ManageInner": [],
-          "Inspect": [],
-          "Create": [],
-          "Run": [],
-          "Rename": [
-            "root"
-          ],
-          "RenameInner": [
-            "root"
-          ]
-        }
-      },
-      "IsDirectory": true,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory/goal.exe",
-      "Permissions": {
-        "Permissions": {
           "Read": [],
           "Write": [],
           "Delete": [
             "root"
           ],
           "DeleteInner": [],
-          "Manage": [
-            "5 USERNAME_REPLACE"
-          ],
           "ManageInner": [],
-          "Inspect": [],
-          "Create": [],
-          "Run": [
-            "root"
-          ],
           "Rename": [
             "root"
           ],
-          "RenameInner": []
+          "RenameInner": [],
+          "Inspect": [],
+          "Create": [],
+          "Run": []
         }
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\nsay #11FF11 \"Your code is: TROPHY1_REPLACE\"\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n___FLAG___!!! brick\n___BRICK___!!!\n#"
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory/msg.txt",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "its not a bug"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/mastery7.png",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/ssn.txt",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/passwords(dont_open).txt",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": "lol baited"
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/school",
+      "Path": "~/users/mandragon1002/personal/something",
       "Permissions": {
         "Permissions": {}
       },
@@ -689,40 +603,101 @@
       "Contents": ""
     },
     {
-      "Path": "~/users/USERNAME_REPLACE/stuff/school/presentation.pptx",
+      "Path": "~/users/mandragon1002/personal/trophy.exe",
       "Permissions": {
-        "Permissions": {}
+        "Permissions": {
+          "Manage": [
+            "root"
+          ],
+          "Read": [],
+          "Write": [],
+          "Delete": [
+            "root"
+          ],
+          "DeleteInner": [],
+          "ManageInner": [],
+          "Rename": [
+            "root"
+          ],
+          "RenameInner": [],
+          "Inspect": [],
+          "Create": [],
+          "Run": [
+            "root"
+          ]
+        }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/school/thing.docx",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/school/thing2.docx",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
-    },
-    {
-      "Path": "~/users/USERNAME_REPLACE/stuff/school/hw.png",
-      "Permissions": {
-        "Permissions": {}
-      },
-      "IsDirectory": false,
-      "IsObfuscated": false,
-      "Contents": ""
+      "IsObfuscated": true,
+      "Contents": "#EXECUTABLE_HEADER___\nsay #22FF22 \"Your code is: TROPHY2_REPLACE\"\n#"
     }
   ]
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	],
+	"SleepFlags": [ "brick" ],
+	"Trophies": {
+		"TROPHY1_REPLACE":"trophy_2_1",
+		"TROPHY2_REPLACE":"trophy_2_2",
+	},
+	"Dialogs": [
+		{
+			"Username":"computer_guy",
+			"Messages": [
+				
+			]
+		},
+		{
+			"Username":"Dad",
+			"Messages": [
+				{
+					"Content":"hey dad!",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"look what i have",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"yasuo",
+					"IsImage":true,
+					"Self":true
+				},
+				{
+					"Content":"you are a disgrace to our family",
+					"IsImage":false,
+					"Self":false
+				},
+			]
+		}
+	],
+	"GuideStates": [
+		{ "Id":"_", "Type":"Goto", "Args":[ "1" ] },
+		{ "Id":"1", "Type":"Delay", "Args":[ "2", "5" ] },
+		{ "Id":"2", "Type":"Message", "Args":[ "3", "Hello, it's time to continue" ] },
+		{ "Id":"3", "Type":"Message", "Args":[ "4", "Today will be kinda different" ] },
+		{ "Id":"4", "Type":"Message", "Args":[ "5", "I realised that I infodumped you too hard, so this time you'll be figuring out everything by yourself" ] },
+		{ "Id":"5", "Type":"Message", "Args":[ "6", "Though I'm pretty sure you can still manage it" ] },
+		{ "Id":"6", "Type":"Options", "Args":[ "uhhh okay`7`" ] },
+		{ "Id":"7", "Type":"Message", "Args":[ "8", "So, your task is - connect to the target computer using 'remct' and run the DOOMSDAY.exe file" ] },
+		{ "Id":"8", "Type":"Message", "Args":[ "9", "The problem is - you do not have 'remct' installed, so you'll need to get a package manager first" ] },
+		{ "Id":"9", "Type":"Message", "Args":[ "10", "Download 'mario' package manager at MARIOIP_REPLACE on port MARIOPORT_REPLACE via 'port'" ] },
+		{ "Id":"10", "Type":"Message", "Args":[ "11", "Target computer is at ip TARGETIP_REPLACE" ] },
+		{ "Id":"11", "Type":"Message", "Args":[ "12", "Username: mandragon1002\nPassword: TARGETPASSWORD_REPLACE" ] },
+		{ "Id":"12", "Type":"Message", "Args":[ "13", "Good luck, and don't forget about the 'help' command!" ] },
+		{ "Id":"13", "Type":"Options", "Args":[ "wow, i did it`14`brick" ] },
+		{ "Id":"14", "Type":"Message", "Args":[ "end", "Good job! We'll continue tomorrow then - you can log off." ] },
+		{ "Id":"end", "Type":"End", "Args":[] },
+	]
 }

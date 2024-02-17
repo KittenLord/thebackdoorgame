@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 [JsonConverter(typeof(StringEnumConverter))]
 public enum FilePermission
 {
-    Read, Write, Delete, DeleteInner, Manage, ManageInner, Inspect, Create, Run
+    Read, Write, Delete, DeleteInner, Manage, ManageInner, Rename, RenameInner, Inspect, Create, Run
 }
 
 public class FilePermissions
@@ -35,11 +35,13 @@ public class FilePermissions
 
         foreach(var key in this.permissions.Keys)
         {
-            if(key == FilePermission.Manage || key == FilePermission.Delete) continue;
+            if(key == FilePermission.Manage || key == FilePermission.Delete || key == FilePermission.Rename) continue;
             if(key == FilePermission.ManageInner && this[key].Count > 0)
                 newPerms[FilePermission.Manage] = new(this[key]);
             else if(key == FilePermission.DeleteInner && this[key].Count > 0)
                 newPerms[FilePermission.Delete] = new(this[key]);
+            else if(key == FilePermission.RenameInner && this[key].Count > 0)
+                newPerms[FilePermission.Rename] = new(this[key]);
             newPerms[key] = new(this[key]);
         }
         foreach(var key in overrides.permissions.Keys) if(overrides[key].Count > 0) { UnityEngine.Debug.Log(this[FilePermission.Manage].FirstOrDefault()); newPerms[key] = new(overrides[key]); }

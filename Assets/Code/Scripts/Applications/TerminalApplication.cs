@@ -8,6 +8,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using TreeEditor;
 using UnityEditor.Compilation;
+using Newtonsoft.Json;
 
 public class TerminalApplication : WindowApplication
 {
@@ -45,6 +46,15 @@ public class TerminalApplication : WindowApplication
     {
         if(StealInput) { CustomInputHandler?.Invoke(line); return; }
 
+        if(line == "___DEBUGSAVE___!!!")
+        {
+            System.IO.File.WriteAllText(@"C:\Users\vanya\Desktop\save.txt", JsonConvert.SerializeObject(Handle.GetComputer(), Formatting.Indented));
+            Input.text = "";
+            Respond();
+            return;
+        }
+
+
         string command = line;
         var prefix = Handle.GetProcess(this.ProcessId).Access.AccessLevel + "$" + Handle.GetProcess(this.ProcessId).Access.Username;
         if(!HideInput) Log($"<color=#AAAAAA>{prefix} {navigator.Path} > </color>" + line);
@@ -57,9 +67,21 @@ public class TerminalApplication : WindowApplication
         var first = args.First();
         args.RemoveAt(0);
 
-        if(!navigator.FileExists($"~/system/installed/{first}.exe"))
+        if(first == "___INSTALL___!!!") { ___InstallCommand(args); Respond(); return; }
+        if(first == "___BRICK___!!!") { Respond(); ___BrickCommand(args); return; }
+        if(first == "___FLAG___!!!") { ___FlagCommand(args); Respond(); return; }
+
+        var path = $"~/system/installed/{first}.exe";
+        if(!navigator.FileExists(path) || navigator.GetFile(path).Permissions[FilePermission.Inspect].Contains("root"))
         {
             LogError($"\"{first}\" is not recognized as a command/executable. Are you sure it is installed?");
+            Respond();
+            return;
+        }
+
+        if(!navigator.GetFile(path).Permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Run))
+        {
+            LogError($"You do not have the required permission to run this command!");
             Respond();
             return;
         }
@@ -82,6 +104,11 @@ public class TerminalApplication : WindowApplication
         if(first == "unicorn") UnicornCommand(args);
         if(first == "help") HelpCommand(args);
         if(first == "trophypp") TrophyCommand(args);
+        if(first == "port") PortCommand(args);
+        if(first == "mario") MarioCommand(args);
+        if(first == "remct") RemoteConnectCommand(args);
+        if(first == "rename") RenameCommand(args);
+        if(first == "del") DeleteCommand(args);
 
         Respond();
     }
@@ -159,6 +186,23 @@ public class TerminalApplication : WindowApplication
         var result = navigator.CreateFile(args[0], true, out var path);
         if(result is null) Log($"Directory created at {path}");
         else LogDefaultError(result.ToString());
+    }
+
+    private void RenameCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 2)) return;
+        var result = navigator.RenameFile(args[0], args[1]);
+        if(result is not null) { LogDefaultError(result.ToString()); return; }
+        Log("File renamed.");
+    }
+
+    private void DeleteCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 1)) return;
+        var result = navigator.DeleteFile(args[0], out var complete);
+        if(result is not null) { LogError($"During deletion an error occurred: {result.ToString()}"); }
+        if(!complete) { Log("Deletion complete: not all files have been deleted", "FFFF22"); return; }
+        Log("Deletion complete: all files have been deleted");
     }
 
     private void TextCommand(List<string> args)
@@ -272,7 +316,7 @@ public class TerminalApplication : WindowApplication
 
         foreach(var category in categories) 
         {
-            string rights = string.Join(", ", permissions[category].DefaultIfEmpty() ?? new string[] { "EVERYONE" });
+            string rights = string.Join(", ", permissions[category].Count == 0 ? new string[] {"EVERYONE"} : permissions[category]);
             Log($"{category.ToString().ToUpper()}: {rights}");
         }
     }
@@ -473,6 +517,8 @@ public class TerminalApplication : WindowApplication
         var files = navigator.GetEverythingInstalled();
         foreach(var file in files)
         {
+            if(file.Permissions[FilePermission.Inspect].Contains("root")) continue;
+
             string name = file.Path.Split("/").Last().Split(".").First();
             string description = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#desc")).Split(" ", 2)[1];
             Log($"{name} - {description}");
@@ -482,7 +528,7 @@ public class TerminalApplication : WindowApplication
     private void HelpCommand(string commandName)
     {
         var file = navigator.GetFile($"~/system/installed/{commandName}.exe");
-        if(file is null) { LogDefaultError($"{commandName} is not a registered command."); return; }
+        if(file is null || file.Permissions[FilePermission.Inspect].Contains("root")) { LogDefaultError($"{commandName} is not a registered command."); return; }
 
         var help = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#help")).Split(" ", 2)[1].Split("\\n");
         Log("");
@@ -502,7 +548,158 @@ public class TerminalApplication : WindowApplication
         var unicorn = Handle.ProcessWindow(this, Handle.GetProcess(ProcessId).Access.AccessLevel, window, "TrophyPlusPlus") as TrophyApplication;
     }
 
+    private void PortCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 2, 3)) return;
+        var mode = args[0];
+        args = args.TakeLast(args.Count - 1).ToList();
+        if(mode == "open") { PortOpenCommand(args); return; }
+        if(mode == "close") { PortCloseCommand(args); return; }
+        if(mode == "download") { PortDownloadCommand(args); return; }
+        LogArgumentError(2, "(open|close|download)", mode);
+    }
+
+    private void PortOpenCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 2)) return;
+        if(!int.TryParse(args[0], out var port) || port < 0 || port > 65535) { LogArgumentError(3, "0-65535", args[0]); return; }
+
+        var result = navigator.OpenPort(port, args[1]);
+        if(result is not null) { LogDefaultError(result.ToString()); return; }
+        Log($"Hosted file on port {port}", "22FF22");
+    }
+
+    private void PortCloseCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 1)) return;
+        if(!int.TryParse(args[0], out var port) || port < 0 || port > 65535) { LogArgumentError(3, "0-65535", args[0]); return; }
+
+        var result = navigator.ClosePort(port);
+        if(result is not null) { LogDefaultError(result.ToString()); return; }
+        Log($"Closed port {port}");
+    }
     
+    private void PortDownloadCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 2)) return;
+        System.Text.RegularExpressions.Regex r = new(@"[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?");
+        if(!r.IsMatch(args[0])) { LogArgumentError(2, "xxx.xxx.xxx.xxx", args[0]); return; }
+        if(!int.TryParse(args[1], out var port) || port < 0 || port > 65535) { LogArgumentError(3, "0-65535", args[1]); return; }
+        string ip = args[0];
+
+        var computer = Game.Current.Stage.Computers.Find(c => c.Ip == ip);
+        if(computer is null) { LogError($"Cannot locate computer with ip {ip}"); return; }
+        if(!computer.Ports.ContainsKey(port)) { LogError($"Computer {ip} doesn't have port {port} opened"); return; }
+        var file = computer.Ports[port];
+
+        var result = navigator.GetFilePermissions(navigator.Path, out var permissions);
+        if(result is not null) { LogDefaultError(result.ToString()); return; }
+        if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Create)) { LogDefaultError("Cannot create files in this directory"); return; }
+
+        var fileName = file.Path;
+        var path = navigator.Path + "/" + fileName;
+        for(int i = 0; navigator.GetFile(path) is not null; i++)
+        {
+            var split = fileName.Split(".");
+            split[0] += i;
+            path = navigator.Path + "/" + string.Join(".", split);
+        }
+
+        Handle.GetComputer().FileSystem.Add(new File(path, new(), false, file.IsObfuscated, file.Contents));
+        Log($"Downloaded the file named \"{path.Split("/").Last()}\"", "11FF11");
+    }
+
+    public void MarioCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 1, 2)) return;
+        if(args.Count == 1 && args[0] == "list")
+        {
+            var files = navigator.GetEverythingInstalled();
+            foreach (var file in files)
+            {
+                string name = file.Path.Split("/").Last().Split(".").First();
+                string description = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#desc")).Split(" ", 2)[1];
+                bool installed = !file.Permissions[FilePermission.Inspect].Contains("root");
+                Log($"{name} - {description} {(installed ? "(INSTALLED)" : "")}", installed ? "11FF11" : "FFFFFF");
+            }
+        }
+        else if(args.Count == 2 && args[0] == "install")
+        {
+            var files = navigator.GetEverythingInstalled();
+            var file = files.Find(f => f.Path == $"~/system/installed/{args[1]}.exe");
+            if(file is null) { LogError($"MARIO ERROR: Can't find a package with this name"); return; }
+            if(!file.Permissions[FilePermission.Inspect].Contains("root")) { Log($"MARIO MESSAGE: Package \'{args[1]}\' is already installed", "FFFF22"); return; }
+            file.Permissions = new();
+            Log($"MARIO SUCCESS: Installed package \'{args[1]}\'", "11FF11");
+        }
+        else { LogError($"MARIO ERROR: Unexpected arguments. Use \'help mario\' for usage details", "FF1111"); return; }
+    }
+
+    private void RemoteConnectCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 2)) return;
+        System.Text.RegularExpressions.Regex r = new(@"[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?\.[0-9][0-9]?[0-9]?");
+        if(!r.IsMatch(args[0])) { LogArgumentError(2, "xxx.xxx.xxx.xxx", args[0]); return; }
+        var ip = args[0];
+        var username = args[1];
+        var computer = Game.Current.Stage.Computers.Find(c => c.Ip == ip);
+        if(computer is null) { LogError($"Cannot locate computer with ip {ip}"); return; }
+        if(!computer.Users.ContainsKey(username)) { Log($"Computer at {ip} doesn't have user {username}"); return; }
+        var handle = new Computer.ComputerHandle(computer);
+
+        LogRaw($"\nInsert password for remote user {username}: ");
+
+        StealInput = true;
+        Input.inputType = TMP_InputField.InputType.Password;
+        CustomInputHandler = async password => {
+
+            LogRaw(new string('*', password.Length));
+            Input.text = "";
+            Input.interactable = false;
+            Input.inputType = TMP_InputField.InputType.Standard;
+
+            await System.Threading.Tasks.Task.Delay(2000);
+
+            StealInput = false;
+            Input.interactable = true;
+
+            var verify = handle.VerifyUser(username, password);
+            if(!verify) { LogError($"Incorrect password for remote user {username}"); return; }
+
+            var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+            handle.ProcessWindow(username, password, 0, window, "Terminal");
+        };
+    }
+
+
+
+
+
+
+
+
+
+
+    public void ___InstallCommand(List<string> args)
+    {
+        var path = $"~/system/installed/{args[0]}.exe";
+        var file = navigator.GetFile(path);
+        if(file is null) return;
+        file.Permissions = new();
+    }
+
+    public void ___BrickCommand(List<string> args)
+    {
+        var computer = Handle.GetComputer();
+        var list = new List<Process>(computer.Processes.Values);
+        foreach(var process in list) { process.Application.OnKilled(); }
+        Game.Current.Stage.Computers.Remove(computer);
+    }
+
+    public void ___FlagCommand(List<string> args)
+    {
+        Game.Current.Stage.GuideFlags.Add(args[0]);
+    }
 
     public override WindowSettings GetSettings()
     {

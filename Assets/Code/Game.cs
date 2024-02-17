@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
-    public const int MaxLevel = 1;
+    public const int MaxLevel = 2;
 
     public static Game Current { get; private set; }
     public static int SelectedLevel { get; set; }
@@ -44,7 +44,7 @@ public class Game : MonoBehaviour
 
     }
 
-    void Update() { if(Input.GetKeyDown(KeyCode.RightBracket)) Debug.Log(JsonConvert.SerializeObject(computer)); }
+    // void Update() { if(Input.GetKeyDown(KeyCode.RightBracket)) Debug.Log(JsonConvert.SerializeObject(computer)); }
 
     private void OnMessageSfx(string s, bool n)
     {
@@ -165,6 +165,7 @@ public class Game : MonoBehaviour
 
         // only start after computer starts, so the login screen time doesnt count
         StartCoroutine(GuideStateMachineRunner());
+        Operator.OnStartup(Operator);
 
         return true;
     }
