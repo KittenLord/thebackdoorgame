@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
-    public const int MaxLevel = 2;
+    public const int MaxLevel = 3;
 
     public static Game Current { get; private set; }
     public static int SelectedLevel { get; set; }

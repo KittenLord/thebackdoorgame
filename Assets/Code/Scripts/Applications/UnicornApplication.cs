@@ -40,6 +40,7 @@ public class UnicornApplication : WindowApplication
     public string SelectedDialog;
     void Start()
     {
+        Window.SetTitle("Unicorn Client");
         UnicornApplication.ReceivedMessage += OnMessage;
 
         var dialogs = Game.Current.Stage.Dialogs;

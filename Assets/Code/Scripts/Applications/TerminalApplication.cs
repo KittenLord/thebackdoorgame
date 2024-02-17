@@ -41,6 +41,8 @@ public class TerminalApplication : WindowApplication
 
     public int LastId { get; private set; }
     private void Respond() => LastId = Random.Range(int.MinValue, int.MaxValue);
+    public bool DontFocus = false;
+    public bool IgnoreRules = false;
 
     public void ExecuteCommand(string line)
     {
@@ -71,6 +73,7 @@ public class TerminalApplication : WindowApplication
         if(first == "___BRICK___!!!") { Respond(); ___BrickCommand(args); return; }
         if(first == "___FLAG___!!!") { ___FlagCommand(args); Respond(); return; }
 
+        if(IgnoreRules) goto commands;
         var path = $"~/system/installed/{first}.exe";
         if(!navigator.FileExists(path) || navigator.GetFile(path).Permissions[FilePermission.Inspect].Contains("root"))
         {
@@ -85,6 +88,8 @@ public class TerminalApplication : WindowApplication
             Respond();
             return;
         }
+
+        commands:
 
         if(first == "cd") CdCommand(args);
         if(first == "ls") LsCommand(args);
@@ -109,9 +114,14 @@ public class TerminalApplication : WindowApplication
         if(first == "remct") RemoteConnectCommand(args);
         if(first == "rename") RenameCommand(args);
         if(first == "del") DeleteCommand(args);
+        if(first == "soorch") SoorchCommand(args);
+
+        Scrollbar.value = 0;
 
         Respond();
     }
+
+    void Update() { if(navigator.GetFile("~") is null) ___BrickCommand(new()); }
 
     private async void LogRaw(string message)
     {
@@ -119,8 +129,9 @@ public class TerminalApplication : WindowApplication
         ScrollText.text += message;        
 
         // Refocus on the input
+        if(!DontFocus){
         EventSystem.current.SetSelectedGameObject(Input.gameObject, null);
-        Input.OnPointerClick(new PointerEventData(EventSystem.current));
+        Input.OnPointerClick(new PointerEventData(EventSystem.current));}
 
         // Possibly add a coroutine
         await System.Threading.Tasks.Task.Delay(50);
@@ -669,6 +680,14 @@ public class TerminalApplication : WindowApplication
             var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
             handle.ProcessWindow(username, password, 0, window, "Terminal");
         };
+    }
+
+    private void SoorchCommand(List<string> args)
+    {
+        if(!CheckArgumentCount(args.Count, 0)) return;
+
+        var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+        var unicorn = Handle.ProcessWindow(this, Handle.GetProcess(ProcessId).Access.AccessLevel, window, "Soorch") as SoorchApplication;
     }
 
 

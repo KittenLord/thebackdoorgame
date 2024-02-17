@@ -13,6 +13,7 @@ public class TrophyApplication : WindowApplication
 
     void Start()
     {
+        Window.SetTitle("Trophy++");
         ResultText.gameObject.SetActive(false);
     }
 

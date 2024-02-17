@@ -96,6 +96,22 @@ public class LevelOperator
                 computer.Ports.Add(int.Parse(l.State["MARIOPORT_REPLACE"]), new File("mario-installer.exe", new(), false, true, "#EXECUTABLE_HEADER___\n___INSTALL___!!! mario\nsay #11FF11 \"Mario has been successfully installed!\"\n#"));
                 computer.Ports.Add(int.Parse(l.State["MARIOTROPHYPORT_REPLACE"]), new File("trophy.txt", new(), false, false, $"good job\n{l.State[Trophy1]}"));
             }
+        },
+        () => new LevelOperator {
+            Initialize = l => {
+                l.State["GIRAFFEQLIP_REPLACE"] = GenerateIp();
+                l.State["GIRAFFEQLPORT_REPLACE"] = GeneratePort().ToString();
+                l.State["GIRAFFEQLPASSWORD_REPLACE"] = GeneratePassword();
+                l.State[Trophy1] = GenerateTrophy();
+                Game.Current.AddComponent<AmethystDownloader>();
+            },
+            ReplaceStage = (l, s) => {
+                s = s.Replace("GIRAFFEQLIP_REPLACE", l.State["GIRAFFEQLIP_REPLACE"]);
+                s = s.Replace("GIRAFFEQLPORT_REPLACE", l.State["GIRAFFEQLPORT_REPLACE"]);
+                s = s.Replace("GIRAFFEQLPASSWORD_REPLACE", l.State["GIRAFFEQLPASSWORD_REPLACE"]);
+                s = s.Replace(Trophy1, l.State[Trophy1]);
+                return s;
+            }
         }
     };
 

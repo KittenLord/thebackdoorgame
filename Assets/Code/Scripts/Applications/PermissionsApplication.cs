@@ -27,6 +27,7 @@ public class PermissionsApplication : WindowApplication
 
     async void Start()
     {
+        Window.SetTitle("Perms");
         // This is some absolutely vile code, but it's a gamejam
 
         try{

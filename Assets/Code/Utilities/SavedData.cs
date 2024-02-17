@@ -10,6 +10,8 @@ public static class KEY
     public const string SavedUsername = "username";
     public const string SavedPassword = "password";
 
+    public static readonly string[] Trophies = new string[] { "trophy_1_1", "trophy_2_1", "trophy_2_2" };
+
     public static readonly string[] DeleteOnNew = new string[] { SavedUsername, SavedPassword };
 }
 

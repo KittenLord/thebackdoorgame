@@ -17,6 +17,7 @@ public class TextEditorApplication : WindowApplication
 
     void Start()
     {
+        Window.SetTitle("TXT Editor");
         navigator = this.Handle.GetNavigator(ProcessId);
         var file = navigator.GetFile(FilePath);
         if(file is null) { Destroy(Window.gameObject); return; }
