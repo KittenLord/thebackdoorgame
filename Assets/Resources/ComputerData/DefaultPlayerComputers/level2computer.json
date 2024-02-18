@@ -8,7 +8,7 @@
     },
     "root": {
       "Username": "root",
-      "Password": "123",
+      "Password": "asdna9898a2bdad9dnawdnas7dba9b2dabs9dma2rma09smd9an2n9and0an20ma0mdsn0an982ndans8dan20nas0dna082ne8asn8dan028ansnda082n8a02nd8adas",
       "AccessLevel": 5
     }
   },
@@ -469,7 +469,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nterminal\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon iconterminal\nterminal\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/desktop/Unicorn.exe",
@@ -478,7 +478,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nunicorn\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon iconunicorn\nunicorn\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/desktop/TrophyPlusPlus.exe",
@@ -487,7 +487,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\ntrophypp\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon icontrophypp\ntrophypp\n#"
     },
     {
       "Path": "~/system/installed/task.exe",

@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public partial class MainMenu : MonoBehaviour
 {
+    public static bool ShowWin = false;
     public static MainMenu Main { get; private set; }
 
     public List<MainMenuPanel> Panels { get; private set; } = new();
@@ -17,12 +20,23 @@ public partial class MainMenu : MonoBehaviour
         Main = this;
     }
     
+    [SerializeField] private CanvasGroup WinScreen;
+    [SerializeField] private Button ContinueButton;
     void Start()
     {
+        ContinueButton.interactable = SavedData.GetFlag(KEY.EverPlayed);
         PanelHolderShownX = PanelHolder.position.x / Screen.width;
         PanelHolderHiddenX = (PanelHolder.position.x + 130 * (Screen.width / 1920)) / Screen.width;
         PanelHolder.transform.position = new Vector3(PanelHolderHiddenX * Screen.width, PanelHolder.position.y, PanelHolder.position.z);
         PanelHolder.SetAsLastSibling();
+
+        if(ShowWin)
+        {
+            ShowWin = false;
+            WinScreen.alpha = 1;
+            WinScreen.interactable = true;
+            WinScreen.blocksRaycasts = true;
+        }
     }
 
     public void NewGame()
@@ -37,10 +51,26 @@ public partial class MainMenu : MonoBehaviour
         Debug.Log("QUIT");
     }
 
-    public static void StartGameStatic(int level)
+    public void StartGameStatic(int level)
     {
         Game.SelectedLevel = level;
         Debug.Log(level);
+        SavedData.SetFlag(KEY.EverPlayed);
+        StartCoroutine(LoadLevel());
+    }
+
+    [SerializeField] private CanvasGroup Loading;
+    IEnumerator LoadLevel()
+    {
+        Loading.interactable = true;
+        Loading.blocksRaycasts = true;
+        float time = 0;
+        while(time < 1.5f)
+        {
+            time += Time.deltaTime;
+            Loading.alpha = time / 1.5f;
+            yield return null;
+        }
         SceneManager.LoadScene("GameScene");
     }
 
@@ -122,6 +152,6 @@ public partial class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F12)) SavedData.Reset();
+        //if(Input.GetKeyDown(KeyCode.F12)) SavedData.Reset();
     }
 }

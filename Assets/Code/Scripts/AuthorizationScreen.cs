@@ -18,13 +18,15 @@ public class AuthorizationScreen : MonoBehaviour
 
     void Start()
     {
-        ErrorText.gameObject.SetActive(false);
+        ErrorText.text = "";
+        //ErrorText.gameObject.SetActive(false);
         LoadingIndicator.gameObject.SetActive(false);
     }
 
     public void OnSubmit()
     {
         ErrorText.text = "";
+        if(UsernameInput.text == "") { ErrorText.text = "Your username cannot be empty!"; return;}
         if(UsernameInput.text.Any(c => char.IsWhiteSpace(c))) { ErrorText.text = "Your username cannot contain whitespace characters!"; return; }
         // check password (dont need to?)
 

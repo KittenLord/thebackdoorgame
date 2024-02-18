@@ -9,8 +9,11 @@ public static class KEY
     public const string SaveExists = "new";
     public const string SavedUsername = "username";
     public const string SavedPassword = "password";
+    public const string EverPlayed = "ever";
 
-    public static readonly string[] Trophies = new string[] { "trophy_1_1", "trophy_2_1", "trophy_2_2" };
+    public const string HasWonGame = "won";
+
+    public static readonly string[] Trophies = new string[] { "trophy_1_1", "trophy_2_1", "trophy_2_2", "trophy_3_1", "trophy_3_2", "trophy_3_3" };
 
     public static readonly string[] DeleteOnNew = new string[] { SavedUsername, SavedPassword };
 }
@@ -25,6 +28,8 @@ public static class SavedData
 
     public static void SetFlag(string flag, bool value = true) => PlayerPrefs.SetInt(flag, value ? 1 : 0);
     public static bool GetFlag(string flag) => PlayerPrefs.HasKey(flag) && PlayerPrefs.GetInt(flag) != 0;
+
+    public static int GetInt(string flag) => PlayerPrefs.HasKey(flag) ? PlayerPrefs.GetInt(flag) : 0;
 
     public static void SetJson(string id, object o) => PlayerPrefs.SetString(id, JsonConvert.SerializeObject(o));
     public static T GetJson<T>(string id, System.Func<string, string> edit) { try { return JsonConvert.DeserializeObject<T>(edit(PlayerPrefs.GetString(id))); } catch { return default; }}

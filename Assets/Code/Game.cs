@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -44,6 +45,43 @@ public class Game : MonoBehaviour
         var stage = JsonConvert.DeserializeObject<Stage>(Operator.ReplaceStage(Operator, Resources.Load<TextAsset>(stagePath).text));
         this.Stage = stage;
 
+        StartCoroutine(StartupAnimation());
+    }
+
+    [SerializeField] public Transform StartupScreen;
+    IEnumerator StartupAnimation()
+    {
+        var text = StartupScreen.GetChild(0).GetComponent<TMP_Text>();
+        yield return new WaitForSeconds(1f);
+        text.text += "\n[SIGNAL RECEIVED]";
+        yield return new WaitForSeconds(1f);
+        text.text += "\nCopyright BakhromaOS";
+        yield return new WaitForSeconds(0.05f);
+        text.text += "\nINITIALIZING FILE SYSTEM";
+        yield return new WaitForSeconds(0.05f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += "\nPROGRESS: 0% [          ]";
+        yield return new WaitForSeconds(0.2f);
+        text.text += "\nPROGRESS: 4% [#         ]";
+        yield return new WaitForSeconds(0.1f);
+        text.text += "\nPROGRESS: 16% [##         ]";
+        yield return new WaitForSeconds(0.2f);
+        text.text += "\nPROGRESS: 18% [##         ]";
+        yield return new WaitForSeconds(0.3f);
+        text.text += "\nPROGRESS: 32% [####       ]";
+        yield return new WaitForSeconds(0.1f);
+        text.text += "\nPROGRESS: 47% [######     ]";
+        yield return new WaitForSeconds(0.8f);
+        text.text += "\nPROGRESS: 87% [#########  ]";
+        yield return new WaitForSeconds(0.2f);
+        text.text += "\nPROGRESS: 99% [########## ]";
+        yield return new WaitForSeconds(1f);
+        StartupScreen.gameObject.SetActive(false);
     }
 
     void Update() { if(Game.Current.Stage.GuideFlags.Contains("sleep")) SleepIcon.color = new Color(0.1f, 1, 0.1f); }

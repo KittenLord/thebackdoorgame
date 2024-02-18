@@ -103,6 +103,8 @@ public class LevelOperator
                 l.State["GIRAFFEQLPORT_REPLACE"] = GeneratePort().ToString();
                 l.State["GIRAFFEQLPASSWORD_REPLACE"] = GeneratePassword();
                 l.State[Trophy1] = GenerateTrophy();
+                l.State[Trophy2] = GenerateTrophy();
+                l.State[Trophy3] = GenerateTrophy();
                 Game.Current.AddComponent<AmethystDownloader>();
             },
             ReplaceStage = (l, s) => {
@@ -110,6 +112,17 @@ public class LevelOperator
                 s = s.Replace("GIRAFFEQLPORT_REPLACE", l.State["GIRAFFEQLPORT_REPLACE"]);
                 s = s.Replace("GIRAFFEQLPASSWORD_REPLACE", l.State["GIRAFFEQLPASSWORD_REPLACE"]);
                 s = s.Replace(Trophy1, l.State[Trophy1]);
+                s = s.Replace(Trophy2, l.State[Trophy2]);
+                s = s.Replace(Trophy3, l.State[Trophy3]);
+                return s;
+            },
+            ReplaceComputer = (l, s) => {
+                s = s.Replace("GIRAFFEQLIP_REPLACE", l.State["GIRAFFEQLIP_REPLACE"]);
+                s = s.Replace("GIRAFFEQLPORT_REPLACE", l.State["GIRAFFEQLPORT_REPLACE"]);
+                s = s.Replace("GIRAFFEQLPASSWORD_REPLACE", l.State["GIRAFFEQLPASSWORD_REPLACE"]);
+                s = s.Replace(Trophy1, l.State[Trophy1]);
+                s = s.Replace(Trophy2, l.State[Trophy2]);
+                s = s.Replace(Trophy3, l.State[Trophy3]);
                 return s;
             }
         }

@@ -8,7 +8,7 @@
     },
     "root": {
       "Username": "root",
-      "Password": "123",
+      "Password": "ada87bda8sn9andan2ne8abdan9an9d9asdna39rba8bs8das9djadn8asnd87asb87dbasdna9sjda0n2d9ans9dba7sdba72bdsndabwd",
       "AccessLevel": 5
     }
   },
@@ -468,7 +468,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nterminal\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon iconterminal\nterminal\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/desktop/Unicorn.exe",
@@ -477,7 +477,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\nunicorn\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon iconunicorn\nunicorn\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/desktop/TrophyPlusPlus.exe",
@@ -486,7 +486,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\n#icon terminal\ntrophypp\n#"
+      "Contents": "#EXECUTABLE_HEADER___\n#icon icontrophypp\ntrophypp\n#"
     },
     {
       "Path": "~/system/installed/task.exe",
@@ -591,6 +591,15 @@
       "Contents": "minecraft 1.7.10\nindustrial craft 2\nbuildcraft\nto be expanded"
     },
     {
+      "Path": "~/users/USERNAME_REPLACE/notes/newnote.txt",
+      "Permissions": {
+        "Permissions": {}
+      },
+      "IsDirectory": false,
+      "IsObfuscated": false,
+      "Contents": "too late"
+    },
+    {
       "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory",
       "Permissions": {
         "Permissions": {
@@ -648,7 +657,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\nsay #FFFF22 \"You have already used this trophy lol. Good thinking tho\"\n#"
+      "Contents": "#EXECUTABLE_HEADER___\nsay #FFFF22 \"Okay fine, you can get it: TROPHY3_REPLACE\"\n#"
     },
     {
       "Path": "~/users/USERNAME_REPLACE/stuff/innocuous_directory/msg.txt",

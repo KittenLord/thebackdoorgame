@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +18,7 @@ public class SoorchPage
 public class SoorchApplication : WindowApplication
 {
     private List<SoorchPage> Pages;
-    void Start() { SearchTab.gameObject.SetActive(true); Pages = JsonConvert.DeserializeObject<List<SoorchPage>>(Resources.Load<TextAsset>("articles").text); }
+    void Start() { Window.SetTitle("Soorch Browser"); SearchTab.gameObject.SetActive(true); Pages = JsonConvert.DeserializeObject<List<SoorchPage>>(Resources.Load<TextAsset>("articles").text); }
     public override string Name => "soorch";
     public override WindowSettings GetSettings()
     {
@@ -47,6 +46,7 @@ public class SoorchApplication : WindowApplication
     public void HidePage()
     {
         ArticleTab.gameObject.SetActive(false);
+        foreach(Transform child in CustomTab) child.gameObject.SetActive(false);
         CustomTab.gameObject.SetActive(false);
         Page404.gameObject.SetActive(false);
     }
@@ -54,6 +54,7 @@ public class SoorchApplication : WindowApplication
     public void GoHome()
     {
         ArticleTab.gameObject.SetActive(false);
+        foreach(Transform child in CustomTab) child.gameObject.SetActive(false);
         CustomTab.gameObject.SetActive(false);
         ResultTab.gameObject.SetActive(false);
         Page404.gameObject.SetActive(false);
@@ -137,6 +138,7 @@ public class SoorchApplication : WindowApplication
 
                     ArticleTab.GetChild(0).GetComponent<TMP_Text>().text = page.Title;
                     ArticleTab.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = page.Content;
+                    ArticleTab.GetChild(2).GetComponent<Scrollbar>().value = 1;
                     return;
                 }
 
@@ -177,6 +179,7 @@ public class SoorchApplication : WindowApplication
 
                     ArticleTab.GetChild(0).GetComponent<TMP_Text>().text = p.Title;
                     ArticleTab.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = p.Content;
+                    ArticleTab.GetChild(2).GetComponent<Scrollbar>().value = 1;
                     return;
                 }
 

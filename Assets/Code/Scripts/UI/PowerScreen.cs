@@ -49,14 +49,36 @@ public class PowerScreen : MonoBehaviour
                 }
                 break;
             case PowerType.Factory:
-                InfoText.text = "FACTORY RESET: If you have bricked your computer, you can factory reset your computer. It will delete your save, load default save, but your completed levels and achievements will be keptk";
+                InfoText.text = "[DISABLED] FACTORY RESET: If you have bricked your computer, you can factory reset your computer. It will delete your save, load default save, but your completed levels and achievements will be kept";
                 break;
         }
     }
 
     public void OnConfirm()
     {
-        switch(type)
+        StartCoroutine(OnPower());
+    }
+
+    IEnumerator OnPower()
+    {
+        Game.Current.StartupScreen.gameObject.SetActive(true);
+        var text = Game.Current.StartupScreen.GetChild(0).GetComponent<TMP_Text>();
+        text.text = "";
+        yield return new WaitForSeconds(0.5f);
+        text.text += "RECEIVED POWER OFF SIGNAL";
+        yield return new WaitForSeconds(0.6f);
+        text.text += "\nSaving data";
+        yield return new WaitForSeconds(0.2f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += ".";
+        yield return new WaitForSeconds(0.2f);
+        text.text += "\nOFFLINE";
+        yield return new WaitForSeconds(0.5f);
+
+        switch (type)
         {
             case PowerType.Power:
                 SceneManager.LoadScene("MenuScene");
@@ -65,12 +87,22 @@ public class PowerScreen : MonoBehaviour
                 SceneManager.LoadScene("GameScene");
                 break;
             case PowerType.Factory:
-                // TODO implement this shit
+                // TODO implement this shit 
+                // didnt have time :(
+                SceneManager.LoadScene("MenuScene");
                 break;
             case PowerType.Sleep:
                 Game.SelectedLevel++;
                 SavedData.SetFlag("level" + Game.SelectedLevel.ToString());
-                if(Game.SelectedLevel >= Game.MaxLevel) { SceneManager.LoadScene("MenuScene"); }
+                if (Game.SelectedLevel >= Game.MaxLevel) 
+                { 
+                    if(!SavedData.GetFlag(KEY.HasWonGame))
+                    {
+                        SavedData.SetFlag(KEY.HasWonGame);
+                        MainMenu.ShowWin = true;
+                    }
+                    SceneManager.LoadScene("MenuScene"); 
+                }
                 else { SceneManager.LoadScene("GameScene"); }
                 break;
         }

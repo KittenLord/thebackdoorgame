@@ -88,7 +88,7 @@
 		{ "Id":"3", "Type":"Message", "Args":[ "4", "Good to hear. Let's start then." ] },
 		
 		{ "Id":"4", "Type":"Message", "Args":[ "qEverUsed", "So, have you ever used a terminal?" ] },
-		{ "Id":"qEverUsed", "Type":"Options", "Args":[ "yeah, kinda`qEverUsedYes`", "no`tutorialThorough`" ] },
+		{ "Id":"qEverUsed", "Type":"Options", "Args":[ "yeah, kinda`qEverUsedYes`", "no, teach me please`tutorialThorough`" ] },
 		
 		{ "Id":"qEverUsedYes", "Type":"Message", "Args":[ "qTutorialType", "Great! Do you want a quick refresher, a thorough introduction, or go straight to the business?" ] },
 		{ "Id":"qTutorialType", "Type":"Options", "Args":[ "quick`tutorialQuick`", "thorough`tutorialThorough`", "i know what im doing`qTutorialTypeNone`" ] },
@@ -107,18 +107,18 @@
 		{ "Id":"tutorialThorough", "Type":"Message", "Args":[ "t1", "Let me explain it then" ] },
 		{ "Id":"t1", "Type":"Message", "Args":[ "t2", "Navigating in the terminal is similar to navigating in file explorer." ] },
 		{ "Id":"t2", "Type":"Message", "Args":[ "t3", "You type 'cd folder' to go inside a folder, type 'cd ..' to go back one step" ] },
-		{ "Id":"t3", "Type":"Message", "Args":[ "t4", "And you can even paths straight from the file tree root, like 'cd ~/users/'" ] },
+		{ "Id":"t3", "Type":"Message", "Args":[ "t4", "And you can even use absolute paths straight from the file tree root, like 'cd ~/users/'" ] },
 		{ "Id":"t4", "Type":"Message", "Args":[ "t5", "Type 'tree ~' in your terminal and try navigating through the file system for yourself" ] },
 		{ "Id":"t5", "Type":"Options", "Args":[ "i tried it, lets continue`t6`" ] },
 		{ "Id":"t6", "Type":"Message", "Args":[ "t7", "Great! Now let me tell you about permissions" ] },
 		{ "Id":"t7", "Type":"Message", "Args":[ "t8", "Every file/directory has permissions that limit what you can do with them" ] },
 		{ "Id":"t8", "Type":"Message", "Args":[ "t9", "If a file has permission 'READ: 5 admin', then only user 'admin' with access '5' can read it" ] },
 		{ "Id":"t9", "Type":"Message", "Args":[ "t10", "You can view permissions by typing 'permslist file', and if you have the MANAGE permission, you can edit permissions using 'perms file'" ] },
-		{ "Id":"t10","Type":"Message", "Args":[ "t11", "If you do not have the necessary access level, you can use command 'auth username level', if you have the user password" ] },
+		{ "Id":"t10","Type":"Message", "Args":[ "t11", "If you need higher access level, you can use command 'auth username level', if you know the user password" ] },
 		{ "Id":"t11","Type":"Message", "Args":[ "t12", "Finally, the last thing that you need to know for today, is how to run executables" ] },
-		{ "Id":"t12","Type":"Message", "Args":[ "t13", "If you have the RUN permission, you can use 'run file.exe' to run an executable" ] },
+		{ "Id":"t12","Type":"Message", "Args":[ "t13", "If you have sufficient RUN permissions, you can use 'run file.exe' to run an '.exe' executable file" ] },
 		{ "Id":"t13","Type":"Message", "Args":[ "t14", "You got everything?" ] },
-		{ "Id":"t14","Type":"Options", "Args":[ "yeah`task1`" ] },
+		{ "Id":"t14","Type":"Options", "Args":[ "yeah`task`" ] },
 		
 		
 		{ "Id":"qTutorialTypeNone", "Type":"Message", "Args":[ "task1", "Okay, let's not waste any time." ] },

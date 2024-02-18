@@ -5,9 +5,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
-using Unity.VisualScripting;
-using TreeEditor;
-using UnityEditor.Compilation;
 using Newtonsoft.Json;
 
 public class TerminalApplication : WindowApplication
@@ -256,7 +253,9 @@ public class TerminalApplication : WindowApplication
         int indent = 0;
         void PrintOut(Computer.FileNavigator.TreeNode<string> focus)
         {
-            Log(new string(' ', indent*2) + focus.Value.Split("/").Last());
+            string name = focus.Value.Split("/").Last();
+            if(focus.Value == navigator.Path) name = $">>>{name}<<<";
+            Log(new string(' ', indent*2) + name); 
             indent++;
             foreach(var branch in focus.Branches) PrintOut(branch);
             indent--;
@@ -275,7 +274,6 @@ public class TerminalApplication : WindowApplication
         
         // literal warcrime of a line
         int access = args.Count > 1 ? (int.TryParse(args[1], out var value) ? value : Handle.GetUserMaxAccess(args[0]) ?? 0) : 0;
-        // TODO possibly change default to "this"
         bool openNew = args.Count == 3 && args[2] == "new";
 
         LogRaw($"\nInsert password for user {args[0]}: ");
@@ -534,6 +532,7 @@ public class TerminalApplication : WindowApplication
             string description = file.Contents.Split("\n").ToList().Find(line => line.StartsWith("#desc")).Split(" ", 2)[1];
             Log($"{name} - {description}");
         }
+        Log("Use 'help <command>' to view help message for a specific command.");
     }
 
     private void HelpCommand(string commandName)

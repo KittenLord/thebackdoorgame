@@ -102,12 +102,14 @@ public class UnicornApplication : WindowApplication
             if(option == "") continue;
             var r = Instantiate(ResponseOptionPrefab, ResponsesParent);
             r.GetChild(0).GetComponent<TMP_Text>().text = option;
-            r.GetComponent<Button>().onClick.AddListener(() => { 
+            r.GetComponent<Button>().onClick.AddListener(async () => { 
                 Game.Current.UserResponse = n; 
                 Game.Current.Stage.Dialogs.Find(d => d.Username == Game.GuideUsername).Messages.Add(new DialogMessage(option, false, true));
                 Game.Current.UserOptions = new();
                 foreach(Transform o in ResponsesParent) Destroy(o.gameObject);
                 UnicornApplication.ReceiveMessage(Game.GuideUsername, false);
+                await System.Threading.Tasks.Task.Delay(100);
+                ReloadLayouts();
             });
         }
 

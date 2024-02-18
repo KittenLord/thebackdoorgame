@@ -43,7 +43,7 @@
     },
     "root": {
       "Username": "root",
-      "Password": "123",
+      "Password": "asda98snd9anw09anw98dnas9dj9q2na0nsdna9n290nasnda98n9snd9asnd9ansd9and9an98sq89ahe8a9hd98fahsdahs9dhas98dha98sdh09ashdasda",
       "AccessLevel": 5
     }
   },
@@ -806,7 +806,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": true,
-      "Contents": "#EXECUTABLE_HEADER___\nsay #FFFFFF \"Trying to sync...\"\nsay #FF1111 \"Error: INVALID ENVIRONMENT\""
+      "Contents": "#EXECUTABLE_HEADER___\nsay #FFFFFF \"Trying to sync...\"\nsay #FF1111 \"Error: INVALID ENVIRONMENT\"\nsay #FF1111 \"Error details: TROPHY2_REPLACE\""
     },
     {
       "Path": "~/users/amethyst_giraffeql/manage/exec/sync/log.txt",
@@ -815,7 +815,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "user \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\nuser \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\nuser \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\nuser \"amethyst_main\" requested connection on port 80\nINTERNAL CONNECTION ERROR: CLOSING ALL CONNECTIONS\nOFFLINE\nSTARTING UP...\nHOSTING \"sync.exe\" on port 80\nuser \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\nuser \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\nuser \"amethyst_main\" requested connection on port 80\nuser \"amethyst_main\" downloaded \"sync.exe\"\nuser \"amethyst_main\" closed connection\n\n"
+      "Contents": "remote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\nremote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\nremote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\nremote user \"amethyst_main\" requested connection on port 80\nINTERNAL CONNECTION ERROR: CLOSING ALL CONNECTIONS\nOFFLINE\nSTARTING UP...\nHOSTING \"sync.exe\" on port 80\nremote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\nremote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\nremote user \"amethyst_main\" requested connection on port 80\nremote user \"amethyst_main\" downloaded \"sync.exe\"\nremote user \"amethyst_main\" closed connection\n\n"
     },
     {
       "Path": "~/users/amethyst_giraffeql/manage/exec/sync/conv.txt",
@@ -824,7 +824,7 @@
       },
       "IsDirectory": false,
       "IsObfuscated": false,
-      "Contents": "someone please add executable signature checking, so that the main server doesn't download some malware bullshit and run it on root by accident - John\n\nuhhh i dont wanna - Robert\n\nnah, itll be fine, dont be a nerd - Jonas\n\nfuck you guys - John"
+      "Contents": "someone please add executable signature checking, so that the main server doesn't download some malware bullshit and run it on root by accident - John\n\nuhhh i dont wanna - Robert\n\nnah, itll be fine, dont be a nerd - Jonas\n\nfuck you guys - John\n\ntms scripting (TMS SCRIPTING!!!) doesn't support verification signatures yet, so it'll require something custom. and we won't spend our money on something custom, because we don't care lol - Richard"
     }
   ]
 }
@@ -849,6 +849,7 @@
 	"Trophies": {
 		"TROPHY1_REPLACE":"trophy_3_1",
 		"TROPHY2_REPLACE":"trophy_3_2",
+		"TROPHY3_REPLACE":"trophy_3_3",
 	},
 	"Dialogs": [
 		{
@@ -888,13 +889,13 @@
 		{ "Id":"1", "Type":"Delay", "Args":[ "2", "5" ] },
 		{ "Id":"2", "Type":"Message", "Args":[ "3", "Hello, it's time for the hardest challenge yet." ] },
 		{ "Id":"3", "Type":"Message", "Args":[ "4", "Your task is to shut down a website named Amethyst Club." ] },
-		{ "Id":"4", "Type":"Message", "Args":[ "5", "All I will tell you is that you need to delete all files on a computer with a user called 'amethyst_main'." ] },
+		{ "Id":"4", "Type":"Message", "Args":[ "5", "All I will tell you is that you need to delete the root directory (the '~') on a computer with a user called 'amethyst_main'." ] },
 		{ "Id":"5", "Type":"Message", "Args":[ "6", "Use whatever methods necessary to do it." ] },
 		{ "Id":"6", "Type":"Options", "Args":[ "uhh, but how am i supposed to find this site?`7`" ] },
 		{ "Id":"7", "Type":"Message", "Args":[ "8", "Oh, yeah, I forgot to tell you." ] },
 		{ "Id":"8", "Type":"Message", "Args":[ "9", "mario package manager now has a web browser named soorch" ] },
-		{ "Id":"9", "Type":"Message", "Args":[ "10", "Use it to find whatever you need." ] },
-		{ "Id":"10", "Type":"Message", "Args":[ "11", "Just keep this in mind: don't be afraid to use the 'help' command, feel free to search for information online if you need it, and *look everywhere*." ] },
+		{ "Id":"9", "Type":"Message", "Args":[ "10", "Install it and use it to find whatever you need." ] },
+		{ "Id":"10", "Type":"Message", "Args":[ "11", "Just keep this in mind: don't be afraid to use the 'help' command, feel free to search for information online if you need it (in fact, there might be some hints online), and *look everywhere*." ] },
 		{ "Id":"11", "Type":"Message", "Args":[ "12", "Good luck." ] },
 		{ "Id":"12", "Type":"Options", "Args":[ "wow, i managed to do it!`13`amethyst" ] },
 		{ "Id":"13", "Type":"Message", "Args":[ "14", "Well done! I knew you could do it!" ] },
