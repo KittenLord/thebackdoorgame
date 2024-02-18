@@ -163,7 +163,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Change directory\n#help cd is used to change your current directory. It accepts one path argument, relative or absolute. You can also put . to stay in the same directory, or .. to go one directory above.\\nSyntax: cd <path>\\nExamples:\\ncd ~/users/admin # Navigating using absolute path\\ncd desktop # Navigating using relative path\\ncd ../../directory # Going two directories above and to another\\ncd ././././ # Stay in the same directory\ncd"
     },
     {
@@ -174,7 +174,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc List files in a directory\n#help ls is used to view contents of a directory. Provide 0 arguments to view the current directory, provide 1 path argument to view specified directory.\\nSyntax: ls [path]\\nExamples:\\nls # List current directory\\nls ~/users # List specified directory \nls"
     },
     {
@@ -185,7 +185,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Create a file\n#help file is used to create a file in the current directory. It requires 1 argument: file name.\\nSyntax: file <path>\\nExamples:\\nfile test.txt # Create a file named \"test.txt\"\\n\nfile ~/users/admin/test.txt # Create a file named \"test.txt\" in the specified directory\nfile"
     },
     {
@@ -196,7 +196,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Rename a file/directory\n#help rename is used to rename a file or directory.\\nSyntax: rename <path> <newName>\\nExamples:\\nrename ~/users/admin/test.txt a.txt # Renames a file named test.txt to \"a.txt\"\nrename"
     },
     {
@@ -207,7 +207,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Recursively delete a file/directory\n#help del is used to delete a file or a directory. USE WITH CAUTION! It cannot be undone, and will delete every file available inside a directory\\nSyntax: del <path>\\nExamples:\\ndel test.txt # Delete a file named test.txt\\ndel ~/users/temp # Recursively delete a folder named temp\ndel"
     },
     {
@@ -218,7 +218,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Create a directory\n#help dir is used to create a directory in the current one. It requires 1 argument: directory name.\\nSyntax: dir <path>\\nExamples:\\ndir test # Create a directory named \"test\"\\ndir ~/users/admin/test # Create a directory named \"test\" in the specified directory\ndir"
     },
     {
@@ -229,7 +229,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc A simple lightweight text editor.\n#help txt is used to quickly edit files. It requires 1 argument: path to a file.\\nSyntax: txt <path>\\nExamples:\\ntxt file.txt # Opens \"file.txt\" in the editor\\ntxt ~/users/admin/file.txt # Opens \"file.txt\" in the editor\ntxt"
     },
     {
@@ -241,7 +241,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc See the tree view of a directory\n#help tree is used to efficiently inspect the inner contents of a directory in a tree-like view. It accepts 0 or 1 path argument.\\nSyntax: tree [path]\\nExamples:\\ntree # Tree view of the current directory.\\ntree ~ # Tree view of the whole system.\\ntree ~/users # Tree view of the specified directory\ntree"
     },
     {
@@ -253,7 +253,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Authorize as a user\n#help auth is used to authorize as a user. It accepts 1, 2 or 3 arguments - username, optional access level, optional runmode. A new terminal instance is created, unless specified otherwise\\nSyntax: auth <username> [accesslevel] [this|new]\\nExamples:\\nauth admin # Authorize as user \"admin\" with access level 0\\nauth admin 5 # Authorize as user \"admin\" with access level 5\\nauth admin max # Authorize as user \"admin\" with the max available access level\\nauth admin 3 this # Authorize as user \"admin\" with access level 3 without creating a new terminal \nauth"
     },
     {
@@ -264,7 +264,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc View file permissions\n#help permslist is used to quickly check what permissions a file or a directory has. It requires 0 or 1 path argument.\\nSyntax: permslist [path]\\nExamples:\\npermslist file.txt # Displays permissions of a file named \"file.txt\"\\npermslist ~/users/admin # Displays permissions of the specified directory.\\npermslist # Displays permissions of the current directory\npermslist"
     },
     {
@@ -282,7 +282,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -291,7 +291,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -356,7 +356,7 @@
         }
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc File permission editor\n#help perms is used as a powerful file/directory permission editor. You cannot edit permissions of a file, if you do not have the required MANAGE access. It requires 0 or 1 path argument.\\nSyntax: perms [path]\\nExamples:\\nperms file.txt # Edit permissions of a file named \"file.txt\"\\nperms ~/users/admin # Edit permissions of the specified directory\\nperms # Edit permissions of the current directory\nperms"
     },
     {
@@ -365,7 +365,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc A command terminal\n#help terminal is used to launch a terminal which can execute user commands or scripts. The new terminal will have the same user as the parent, but access level will be set to 0.\\nSyntax: terminal\\nExamples:\\nterminal # Starts a terminal\nterminal"
     },
     {
@@ -374,7 +374,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Kill the terminal process\n#help kill is used to kill the terminal you are in.\\nSyntax: kill\\nExamples:\\nkill # Kills the terminal.\nkill"
     },
     {
@@ -383,7 +383,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Run an executable\n#help run is used to run executable (.exe) files. It requires 1 or 2 pre-specified arguments: executable file path and an optional run mode. If more than 2 arguments will be provided, they will be used as the executable arguments.\\nSyntax: run <path> [mode]\\nExamples:\\nrun a.exe # Run an executable named \"a.exe\"\\nrun a.exe new # Runs an executable named \"a.exe\" in the new terminal.\\nrun ~/system/installed/tree.exe this ~/users # Runs \"tree.exe\" in the current terminal and provides \"~/users\" as an argument. This is equivalent to \"tree ~/users\"  \nrun"
     },
     {
@@ -392,7 +392,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Help command\n#help help is used to list all available commands and display info about them, or to provide help a specific command.\\nSyntax: help [command]\\nExamples:\\nhelp # Lists all installed commands\\nhelp cd # Provides help on cd command\nhelp"
     },
     {
@@ -401,7 +401,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc Display user text\n#help say is used to display the specified text in the terminal. It requires 2 arguments: color and text in double-quotes.\\nSyntax: say <color> \"<text>\"\\nExamples:\\nsay #FFFFFF \"test test\" # Displays \"test test\" in color white\\nsay #FF0000 \"error error\" # Displays \"error error\" in color red.\nsay"
     },
     {
@@ -410,7 +410,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc A CLI task manager\n#help task is used to manage processes running on the computer. It runs in several modes: task list, task kill.\\ntask list is used to list all tasks on the computer.\\ntask kill is used to kill the specified process if you have enough rights to do so. Requires the provess PID, which can be viewed by using \"task list\".\\nSyntax: task <list|kill> [pid]\\nExamples:\\ntask list # List all tasks\\ntask kill 12831831623 # Kill the process with the specified process id\ntask"
     },
     {
@@ -419,7 +419,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": "#EXECUTABLE_HEADER___\n#desc A port utility\n#help port is a utility to upload and download files using computer ports. There are several subcommands: port open, port close, port download\\nport open opens the specified port and uploads a file\\nport close closes an opened port\\nport download fetches file from other computer's port\\nSyntax:\\nport open <port> <file>\\nport close <port>\\nport download <ip> <port>\\nExamples:\\nport open 12415 file.txt # Opens port 12415 and uploads file named file.txt\\nport close 12415 # Closes port 12415\\nport download 127.0.0.1 8080 # Downloads a file located on port 8080 on computer with ip 127.0.0.1\nport"
     },
     {
@@ -437,7 +437,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -446,7 +446,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -464,7 +464,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -518,7 +518,7 @@
         "Permissions": {}
       },
       "IsDirectory": false,
-      "IsObfuscated": false,
+      "IsObfuscated": true,
       "Contents": ""
     },
     {
@@ -697,7 +697,8 @@
 		{ "Id":"11", "Type":"Message", "Args":[ "12", "Username: mandragon1002\nPassword: TARGETPASSWORD_REPLACE" ] },
 		{ "Id":"12", "Type":"Message", "Args":[ "13", "Good luck, and don't forget about the 'help' command!" ] },
 		{ "Id":"13", "Type":"Options", "Args":[ "wow, i did it`14`brick" ] },
-		{ "Id":"14", "Type":"Message", "Args":[ "end", "Good job! We'll continue tomorrow then - you can log off." ] },
+		{ "Id":"14", "Type":"Message", "Args":[ "sleepFlag", "Good job! We'll continue tomorrow then - you can log off." ] },
+		{ "Id":"sleepFlag", "Type":"Flag", "Args":[ "end", "sleep" ] },
 		{ "Id":"end", "Type":"End", "Args":[] },
 	]
 }

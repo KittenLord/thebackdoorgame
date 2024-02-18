@@ -18,7 +18,7 @@ public class AmethystDownloader : MonoBehaviour
         giraffeqlComputer.Ports.Add(80, new File("sync.exe", new(), false, true, "#EXECUTABLE_HEADER___"));
 
         var handle = new Computer.ComputerHandle(amethystComputer);
-        var window = Instantiate(Game.Current.WindowPrefab, Game.Current.Canvas.transform);
+        var window = Instantiate(Game.Current.WindowPrefab, Game.Current.transform);
         window.transform.position += new Vector3(0, 1, 0) * 20000;
         terminal = handle.ProcessWindow("root", "123", 0, window, "Terminal") as TerminalApplication;
         terminal.DontFocus = true;
@@ -28,7 +28,7 @@ public class AmethystDownloader : MonoBehaviour
     void Update()
     {
         if(Time.frameCount % 500 != 0) return;
-        if(terminal == null) { Game.Current.Stage.GuideFlags.Add("amethyst"); return; }
+        if(terminal == null) { if(!Game.Current.Stage.GuideFlags.Contains("amethyst")) Game.Current.Stage.GuideFlags.Add("amethyst"); return; }
         StartCoroutine(DownloadCoroutine());
     }
 

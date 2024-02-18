@@ -4,6 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [System.Serializable] public enum PowerType
 {
@@ -20,6 +21,7 @@ public class PowerScreen : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+
 
     public void OnPowerButton(int t)
     {
@@ -67,6 +69,7 @@ public class PowerScreen : MonoBehaviour
                 break;
             case PowerType.Sleep:
                 Game.SelectedLevel++;
+                SavedData.SetFlag("level" + Game.SelectedLevel.ToString());
                 if(Game.SelectedLevel >= Game.MaxLevel) { SceneManager.LoadScene("MenuScene"); }
                 else { SceneManager.LoadScene("GameScene"); }
                 break;

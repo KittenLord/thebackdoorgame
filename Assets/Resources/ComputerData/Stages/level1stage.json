@@ -135,7 +135,8 @@
 		
 		
 		{ "Id":"taskdone", "Type":"Message", "Args":[ "taskdone1", "Good job! We are done for today." ] },
-		{ "Id":"taskdone1", "Type":"Message", "Args":[ "end", "I'll give you next task tomorrow, for now you can log off." ] },
+		{ "Id":"taskdone1", "Type":"Message", "Args":[ "sleepFlag", "I'll give you next task tomorrow, for now you can log off." ] },
+		{ "Id":"sleepFlag", "Type":"Flag", "Args":[ "end", "sleep" ] },
 		
 		
 		{ "Id":"end", "Type":"End", "Args":[] },

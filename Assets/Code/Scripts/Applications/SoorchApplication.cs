@@ -76,7 +76,7 @@ public class SoorchApplication : WindowApplication
     public void OnAmethystLogin()
     {
         AmethystError.text = "";
-        System.Text.RegularExpressions.Regex r = new(@""";THROW\(SELECT\(env\.(?<value>.*)\)\);--");
+        System.Text.RegularExpressions.Regex r = new(@""";ERROR\(SELECT\(env\.(?<value>.*)\)\);--");
         var a = AmethystUsername.text.Replace(" ", "");
         var b = AmethystPassword.text.Replace(" ", "");
 

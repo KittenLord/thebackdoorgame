@@ -8,6 +8,7 @@ using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Game : MonoBehaviour
     public Stage Stage { get; private set; }
     [field:SerializeField] public Canvas Canvas { get; private set; }
     [field:SerializeField] public Window WindowPrefab { get; private set; }
+    [SerializeField] private Image SleepIcon;
 
     public const string GuideUsername = "computer_guy";
 
@@ -44,6 +46,7 @@ public class Game : MonoBehaviour
 
     }
 
+    void Update() { if(Game.Current.Stage.GuideFlags.Contains("sleep")) SleepIcon.color = new Color(0.1f, 1, 0.1f); }
     // void Update() { if(Input.GetKeyDown(KeyCode.RightBracket)) Debug.Log(JsonConvert.SerializeObject(computer)); }
 
     private void OnMessageSfx(string s, bool n)
@@ -128,6 +131,11 @@ public class Game : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 
     public bool LoadComputer(string username, string password)
