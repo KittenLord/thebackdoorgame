@@ -19,6 +19,7 @@ public class Sound : MonoBehaviour
         if(Main != null) return;
 
         // TODO player prefs
+        // naahhh
         Volume = 1;
 
         DontDestroyOnLoad(this); 

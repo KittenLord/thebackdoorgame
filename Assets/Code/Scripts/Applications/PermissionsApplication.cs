@@ -38,12 +38,12 @@ public class PermissionsApplication : WindowApplication
         navigator = Handle.GetNavigator(ProcessId);
         var file = navigator.GetFile(TargetPath);
         TargetPathDisplay.text = TargetPath;
-        if(file is null) { Debug.Log(TargetPath); return; }
+        if(file is null) { Debug.Log(TargetPath); TargetPathDisplay.text = "<color=#FF1111>FILE NOT FOUND</color>"; return; }
 
         var result = navigator.GetFilePermissions(TargetPath, out var permissions);
-        if(result is not null) { Debug.Log(result); return; }
+        if(result is not null) { Debug.Log(result);TargetPathDisplay.text = "<color=#FF1111>ACCESS DENIED</color>";  return; }
 
-        if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Manage, FilePermission.ManageInner)) { Debug.Log("dawdadasd"); return; }
+        if(!permissions.Fit(Handle.GetProcess(ProcessId).Access, FilePermission.Manage)) { Debug.Log("dawdadasd");TargetPathDisplay.text = $"<color=#FF1111>ACCESS DENIED</color>"; return; }
 
         Debug.Log(TargetPath + " " + permissions[FilePermission.Manage].FirstOrDefault());
         var editPermissions = file.Permissions.Copy();

@@ -862,22 +862,32 @@
 			"Username":"Dad",
 			"Messages": [
 				{
-					"Content":"hey dad!",
+					"Content":"hello dad!",
 					"IsImage":false,
 					"Self":true
 				},
 				{
-					"Content":"look what i have",
+					"Content":"ive decided to quit league after all",
 					"IsImage":false,
 					"Self":true
 				},
 				{
-					"Content":"yasuo",
-					"IsImage":true,
+					"Content":"inting pigs and losers queue aint worth it",
+					"IsImage":false,
 					"Self":true
 				},
 				{
-					"Content":"you are a disgrace to our family",
+					"Content":"I see a glimpse of hope for the future of our family",
+					"IsImage":false,
+					"Self":false
+				},
+				{
+					"Content":"so ive decided to switch to dota2",
+					"IsImage":false,
+					"Self":true
+				},
+				{
+					"Content":"I wish you were never born.",
 					"IsImage":false,
 					"Self":false
 				},
@@ -889,7 +899,8 @@
 		{ "Id":"1", "Type":"Delay", "Args":[ "2", "5" ] },
 		{ "Id":"2", "Type":"Message", "Args":[ "3", "Hello, it's time for the hardest challenge yet." ] },
 		{ "Id":"3", "Type":"Message", "Args":[ "4", "Your task is to shut down a website named Amethyst Club." ] },
-		{ "Id":"4", "Type":"Message", "Args":[ "5", "All I will tell you is that you need to delete the root directory (the '~') on a computer with a user called 'amethyst_main'." ] },
+		{ "Id":"4", "Type":"Message", "Args":[ "_5", "All I will tell you is that you need to delete the root directory (the '~') on a computer with a user named 'amethyst_main'." ] },
+		{ "Id":"_5", "Type":"Message", "Args":[ "5", "Be sure not to delete any other computer's root directory, or you will not be able to complete your mission!" ] },
 		{ "Id":"5", "Type":"Message", "Args":[ "6", "Use whatever methods necessary to do it." ] },
 		{ "Id":"6", "Type":"Options", "Args":[ "uhh, but how am i supposed to find this site?`7`" ] },
 		{ "Id":"7", "Type":"Message", "Args":[ "8", "Oh, yeah, I forgot to tell you." ] },

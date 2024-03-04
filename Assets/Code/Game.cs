@@ -203,6 +203,7 @@ public class Game : MonoBehaviour
             computer = JsonConvert.DeserializeObject<Computer>(Operator.ReplaceComputer(Operator, json));
         }
 
+        Stage.Computers.Add(computer);
         SavedData.SetFlag(KEY.SaveExists);
         var desktop = Instantiate(Application.Load("Desktop"), Game.Current.Canvas.transform);
         desktop.transform.SetAsFirstSibling();

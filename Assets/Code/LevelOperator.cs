@@ -14,7 +14,7 @@ public class LevelOperator
 
     public static string GenerateTrophy()
     {
-        var pool = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var pool = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
         var a = new string(Enumerable.Range(0, 4).Select(_ => pool[UnityEngine.Random.Range(0, pool.Length)]).ToArray());
         var b = new string(Enumerable.Range(0, 4).Select(_ => pool[UnityEngine.Random.Range(0, pool.Length)]).ToArray());
         var c = new string(Enumerable.Range(0, 4).Select(_ => pool[UnityEngine.Random.Range(0, pool.Length)]).ToArray());

@@ -106,7 +106,7 @@
 		
 		{ "Id":"tutorialThorough", "Type":"Message", "Args":[ "t1", "Let me explain it then" ] },
 		{ "Id":"t1", "Type":"Message", "Args":[ "t2", "Navigating in the terminal is similar to navigating in file explorer." ] },
-		{ "Id":"t2", "Type":"Message", "Args":[ "t3", "You type 'cd folder' to go inside a folder, type 'cd ..' to go back one step" ] },
+		{ "Id":"t2", "Type":"Message", "Args":[ "t3", "You type 'cd folder' to go inside a folder, type 'cd ..' to go back one step, type 'ls' to view contents of the current directory." ] },
 		{ "Id":"t3", "Type":"Message", "Args":[ "t4", "And you can even use absolute paths straight from the file tree root, like 'cd ~/users/'" ] },
 		{ "Id":"t4", "Type":"Message", "Args":[ "t5", "Type 'tree ~' in your terminal and try navigating through the file system for yourself" ] },
 		{ "Id":"t5", "Type":"Options", "Args":[ "i tried it, lets continue`t6`" ] },
